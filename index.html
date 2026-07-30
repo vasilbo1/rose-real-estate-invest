@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>РФ недвижка — сравнение проектов</title>
+<style>
+:root{
+  --bg:#0e1014; --panel:#15181f; --panel2:#1b1f28; --line:#262b36; --line2:#333a48;
+  --tx:#e7eaf0; --tx2:#9aa3b2; --tx3:#6b7383;
+  --acc:#4f9dfd; --good:#2fbf87; --bad:#f0625d; --warn:#e0a03a; --violet:#a276f5;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --shadow:0 1px 0 rgba(255,255,255,.03), 0 8px 24px rgba(0,0,0,.35);
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --bg:#f4f6f9; --panel:#ffffff; --panel2:#f7f9fc; --line:#e2e6ee; --line2:#ccd3e0;
+    --tx:#151922; --tx2:#5c6575; --tx3:#8b93a3;
+    --acc:#1667d6; --good:#12855c; --bad:#cf3a34; --warn:#a9700b; --violet:#7248c9;
+    --shadow:0 1px 2px rgba(16,24,40,.06), 0 8px 24px rgba(16,24,40,.06);
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--tx);
+  font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased; padding:0 0 60px;
+}
+.wrap{max-width:1720px;margin:0 auto;padding:0 18px}
+h1{font-size:20px;letter-spacing:-.2px;margin:0}
+h2{font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:var(--tx2);margin:0 0 10px}
+a{color:var(--acc)}
+.sub{color:var(--tx2);font-size:13px;margin-top:4px}
+header{border-bottom:1px solid var(--line);background:var(--panel);padding:16px 0 14px;margin-bottom:16px}
+.hrow{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.btn{
+  background:var(--panel2);color:var(--tx);border:1px solid var(--line2);border-radius:7px;
+  padding:6px 11px;font-size:12.5px;cursor:pointer;font-family:inherit;
+}
+.btn:hover{border-color:var(--acc);color:var(--acc)}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn.pri:hover{filter:brightness(1.08);color:#fff}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chip{
+  background:var(--panel2);border:1px solid var(--line);border-radius:999px;
+  padding:4px 11px;font-size:12px;color:var(--tx2);
+}
+.chip b{color:var(--tx);font-weight:600}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:16px;box-shadow:var(--shadow)}
+.gp{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px 14px}
+.f{display:flex;flex-direction:column;gap:4px}
+.f label{font-size:11px;color:var(--tx2);letter-spacing:.02em}
+.f label i{color:var(--tx3);font-style:normal}
+input[type=number],input[type=text],select{
+  background:var(--panel2);border:1px solid var(--line2);color:var(--tx);border-radius:6px;
+  padding:5px 7px;font:13px/1.2 var(--mono);width:100%;
+}
+input[type=number]:focus,select:focus{outline:none;border-color:var(--acc)}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.f.hl label{color:var(--acc)}
+.f.hl input,.f.hl select{border-color:color-mix(in srgb,var(--acc) 45%,var(--line2))}
+.f.dim{opacity:.4}
+.f.dim input{cursor:not-allowed}
+.oppnote{margin-top:12px;padding:8px 12px;border-left:3px solid var(--acc);border-radius:0 8px 8px 0;
+  background:color-mix(in srgb,var(--acc) 8%,transparent);font-size:12.5px;color:var(--tx2);font-family:var(--mono)}
+.oppnote b{color:var(--tx);font-family:inherit}
+.presets{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.presets span{font-size:11.5px;color:var(--tx3);margin-right:2px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:var(--shadow)}
+.kpi .k{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--tx3)}
+.kpi .v{font:600 21px/1.2 var(--mono);margin-top:6px;letter-spacing:-.5px}
+.kpi .n{font-size:11.5px;color:var(--tx2);margin-top:3px}
+.tw{overflow:auto;max-height:none;border:1px solid var(--line);border-radius:12px;background:var(--panel);box-shadow:var(--shadow)}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
+thead th{
+  position:sticky;top:0;z-index:3;background:var(--panel2);color:var(--tx2);
+  font-weight:600;text-align:right;padding:6px 8px;border-bottom:1px solid var(--line);
+  white-space:nowrap;font-size:11px;letter-spacing:.02em;
+}
+thead tr.g th{top:0;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);border-bottom:1px solid var(--line);padding:5px 8px;text-align:center}
+thead tr.g th.nm{text-align:left}
+thead tr.h th{top:26px}
+th.srt{cursor:pointer;user-select:none}
+th.srt:hover{color:var(--acc)}
+th.srt.on{color:var(--acc)}
+tbody td{padding:3px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-family:var(--mono)}
+tbody tr:hover td{background:color-mix(in srgb,var(--acc) 6%,transparent)}
+tbody tr.off td{opacity:.34}
+td.nm,th.nm{text-align:left;position:sticky;left:0;background:var(--panel);z-index:2;font-family:inherit;
+  border-right:1px solid var(--line);min-width:342px;max-width:360px}
+tbody tr:hover td.nm{background:color-mix(in srgb,var(--acc) 8%,var(--panel))}
+thead th.nm{z-index:4;background:var(--panel2)}
+.nm .t{display:flex;align-items:center;gap:6px}
+.nm .n1{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:212px}
+/* название объекта = ссылка на лот: кликается всё имя, а не иконка */
+a.n1{color:var(--tx);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px;
+  text-decoration-color:color-mix(in srgb,var(--acc) 55%,transparent)}
+a.n1:hover{color:var(--acc);text-decoration-color:var(--acc)}
+a.n1::after{content:'↗';font-size:9.5px;margin-left:3px;vertical-align:2px;opacity:.8;text-decoration:none}
+span.n1.nolink{border-bottom:1px dotted var(--line2)}
+.nm .n2{display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--tx3);margin-top:1px}
+.nm .n2 .loc{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:104px}
+.spec{font:11px/15px var(--mono);color:var(--tx2);background:color-mix(in srgb,var(--tx3) 12%,transparent);
+  border-radius:4px;padding:0 5px;white-space:nowrap;flex:0 0 auto}
+.fin{font-size:10px;line-height:15px;border-radius:4px;padding:0 5px;white-space:nowrap;flex:0 0 auto;
+  border:1px solid currentColor}
+.fin.f0{color:var(--good)}   /* чистовая: ремонт не нужен, только меблировка */
+.fin.f1{color:var(--warn)}   /* предчистовая (white box) */
+.fin.f2{color:var(--bad)}    /* без отделки: полный ремонт */
+.gchips{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 10px}
+.gchips span.l{font-size:11.5px;color:var(--tx3)}
+.gc{background:var(--panel2);border:1px solid var(--line2);border-radius:7px;padding:4px 10px;font-size:12px;
+  color:var(--tx);cursor:pointer;font-family:inherit;display:inline-flex;gap:6px;align-items:center}
+.gc:hover{border-color:var(--acc)}
+.gc.off{color:var(--tx3);border-style:dashed}
+.gc b{font-weight:600;font-size:10.5px;color:var(--tx3)}
+thead tr.g th.grp{cursor:pointer}
+thead tr.g th.grp:hover{color:var(--acc)}
+.tg{display:inline-flex;align-items:center;gap:3px;padding:0 5px;border:1px solid var(--line2);border-radius:4px;
+  font-size:10px;color:var(--tx3);cursor:pointer;user-select:none;line-height:15px;white-space:nowrap}
+.tg:hover{border-color:var(--acc);color:var(--acc)}
+.tg.on{border-color:var(--acc);color:var(--acc);background:color-mix(in srgb,var(--acc) 12%,transparent)}
+.tg.on.fl{border-color:var(--violet);color:var(--violet);background:color-mix(in srgb,var(--violet) 14%,transparent)}
+.sep{border-left:2px solid var(--line2)!important}
+input.cell{width:64px;padding:3px 5px;font-size:12px;text-align:right;border-radius:5px}
+input.cell.w{width:78px}
+input.cell.ch{border-color:var(--warn);color:var(--warn)}
+.pos{color:var(--good)} .neg{color:var(--bad)} .mut{color:var(--tx3)}
+.bar{position:relative;display:inline-block;width:104px;height:14px;vertical-align:middle;margin-left:6px;background:color-mix(in srgb,var(--tx3) 14%,transparent);border-radius:3px;overflow:hidden}
+.bar i{position:absolute;top:0;bottom:0;display:block}
+.bar .z{position:absolute;top:-1px;bottom:-1px;width:1px;background:var(--tx3);opacity:.6}
+.ck{width:14px;height:14px;accent-color:var(--acc);cursor:pointer;flex:0 0 auto}
+.chartcard{padding:14px 16px 6px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0 2px;font-size:11.5px;color:var(--tx2)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--tx2);font-size:12.5px;padding:4px 0}
+summary:hover{color:var(--acc)}
+.note{font-size:12.5px;color:var(--tx2);line-height:1.6}
+.note b{color:var(--tx)}
+.note ul{margin:6px 0 10px;padding-left:20px}
+.note li{margin:3px 0}
+.warnbox{border-left:3px solid var(--warn);background:color-mix(in srgb,var(--warn) 8%,transparent);padding:8px 12px;border-radius:0 8px 8px 0;margin:10px 0;font-size:12.5px}
+.flag{color:var(--warn);cursor:help}
+.foot{color:var(--tx3);font-size:11.5px;margin-top:14px;text-align:center}
+
+/* ---------------------------------------------------------------- модалки */
+.ovl{position:fixed;inset:0;background:rgba(6,8,12,.62);backdrop-filter:blur(2px);z-index:50;
+  display:flex;align-items:flex-start;justify-content:center;padding:28px 16px;overflow:auto}
+.ovl[hidden]{display:none}
+.mbox{background:var(--panel);border:1px solid var(--line2);border-radius:14px;width:100%;max-width:720px;
+  box-shadow:0 24px 64px rgba(0,0,0,.45);overflow:hidden}
+.mbox.wide{max-width:860px}
+.mhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:14px 18px;
+  border-bottom:1px solid var(--line);background:var(--panel2)}
+.mhead h3{margin:0;font-size:15px;letter-spacing:-.1px}
+.mhead .x{background:none;border:none;color:var(--tx3);font-size:20px;line-height:1;cursor:pointer;padding:0 2px}
+.mhead .x:hover{color:var(--bad)}
+.mbody{padding:16px 18px}
+.mfoot{display:flex;gap:8px;justify-content:flex-end;align-items:center;padding:12px 18px;
+  border-top:1px solid var(--line);background:var(--panel2);flex-wrap:wrap}
+.mfoot .sp{margin-right:auto;font-size:12px;color:var(--tx3)}
+.fg{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:10px 14px}
+.fg.two{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.fg .wide2{grid-column:span 2}
+.fg .wideall{grid-column:1/-1}
+.f textarea{background:var(--panel2);border:1px solid var(--line2);color:var(--tx);border-radius:6px;
+  padding:6px 8px;font:13px/1.4 inherit;width:100%;resize:vertical;min-height:52px}
+.f .hint{font-size:10.5px;color:var(--tx3);line-height:1.35}
+.f input.bad,.f select.bad{border-color:var(--bad)}
+.sec{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line)}
+.sec:first-child{margin-top:0;padding-top:0;border-top:none}
+.sec h4{margin:0 0 10px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--tx2)}
+.pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.pill{background:var(--panel2);border:1px solid var(--line2);border-radius:999px;padding:5px 13px;
+  font-size:12.5px;color:var(--tx2);cursor:pointer;font-family:inherit;white-space:nowrap}
+.pill:hover{border-color:var(--acc);color:var(--acc)}
+.pill.on{background:color-mix(in srgb,var(--acc) 14%,transparent);border-color:var(--acc);color:var(--acc);font-weight:600}
+.payinfo{margin-top:12px;padding:9px 12px;border-left:3px solid var(--acc);border-radius:0 8px 8px 0;
+  background:color-mix(in srgb,var(--acc) 8%,transparent);font-size:12.5px;color:var(--tx2);line-height:1.55}
+.payinfo b{color:var(--tx)}
+.payinfo.warn{border-left-color:var(--warn);background:color-mix(in srgb,var(--warn) 9%,transparent)}
+.err{color:var(--bad);font-size:12.5px;margin-top:10px}
+.lnk{width:100%;font:12px/1.4 var(--mono);background:var(--panel2);border:1px solid var(--line2);
+  color:var(--tx2);border-radius:8px;padding:9px 10px;resize:vertical;min-height:74px;word-break:break-all}
+.tag{display:inline-block;font-size:10px;line-height:15px;padding:0 5px;border-radius:4px;white-space:nowrap;
+  border:1px solid currentColor;flex:0 0 auto}
+.tag.my{color:var(--violet)}
+.paycell{background:none;border:1px dashed var(--line2);border-radius:5px;color:var(--tx2);cursor:pointer;
+  font:11.5px/16px inherit;padding:1px 7px;white-space:nowrap}
+.paycell:hover{border-color:var(--acc);color:var(--acc);border-style:solid}
+.paycell.ch{border-style:solid;border-color:var(--warn);color:var(--warn)}
+.banner{background:color-mix(in srgb,var(--violet) 12%,var(--panel));border:1px solid var(--violet);
+  border-radius:10px;padding:10px 14px;margin-bottom:14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:13px}
+.banner .g{margin-right:auto}
+.banner[hidden]{display:none}
+.rowacts{display:flex;gap:5px;flex-wrap:wrap}
+@media (max-width:640px){
+  .mbox{max-width:none}
+  .fg,.fg.two{grid-template-columns:1fr 1fr}
+  .fg .wide2,.fg .wideall{grid-column:1/-1}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="wrap">
+  <div class="hrow">
+   <div>
+    <h1>РФ недвижка · сравнение проектов под выход</h1>
+    <div class="sub">Крутишь параметры — таблица и график пересчитываются. Движок тот же, что в <span class="mut">exit_horizon.py</span> (проверено сверкой чисел). Метрика решения — <b>эффект против вклада</b>.</div>
+   </div>
+   <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn pri" id="bAdd">+ Свой объект</button>
+    <button class="btn" id="bShare">Поделиться</button>
+    <button class="btn" id="bReset">Сбросить всё</button>
+    <button class="btn" id="bExport">Экспорт JSON</button>
+    <button class="btn" id="bImport">Импорт</button>
+   </div>
+  </div>
+  <div class="chips">
+   <span class="chip">Семейная ипотека <b>одна на семью</b> с 1 фев 2026 → выбор одноразовый</span>
+   <span class="chip">Лимит льготы <b>12 млн</b> → всё дороже ~15 млн финансируешь своими</span>
+   <span class="chip">НДФЛ <b>0 с окт 2031</b> (5 лет с полной оплаты ДДУ, сен 2026)</span>
+   <span class="chip">t0 = <b>сен 2026</b>, ипотека платится с t0, а не с ключей</span>
+  </div>
+ </div>
+</header>
+
+<div class="wrap">
+
+ <div class="banner" id="banner" hidden>
+  <span class="g" id="bannerTxt"></span>
+  <button class="btn pri" id="bKeep">Сохранить себе</button>
+  <button class="btn" id="bDrop">Вернуться к своему</button>
+ </div>
+
+ <div class="card">
+  <h2>Общие параметры (на все объекты)</h2>
+  <div class="gp" id="globals"></div>
+  <div class="oppnote" id="oppnote"></div>
+  <div class="presets">
+   <span>Быстрые сценарии:</span>
+   <button class="btn" data-preset="g5">Рост 5% всем</button>
+   <button class="btn" data-preset="g7">Рост 7% всем</button>
+   <button class="btn" data-preset="asym">Лидеры 7%, Татум 12%</button>
+   <button class="btn" data-preset="rentV">Аренда: мой план</button>
+   <button class="btn" data-preset="rentM">Аренда: осторожная рыночная</button>
+   <button class="btn" data-preset="opp8">Вклад 8% всегда</button>
+   <button class="btn" data-preset="opp14">Вклад 14% всегда</button>
+   <button class="btn" data-preset="oppLad">Вклад: лестница 14→12→10</button>
+   <button class="btn" data-preset="onlyV">Короткий список (12)</button>
+   <button class="btn" data-preset="all">Все 27 объектов</button>
+  </div>
+ </div>
+
+ <div class="kpis" id="kpis"></div>
+
+ <div class="gchips" id="gchips"></div>
+
+ <div class="tw">
+  <table id="tbl">
+   <thead>
+    <tr class="g" id="grow"></tr>
+    <tr class="h" id="hrow"></tr>
+   </thead>
+   <tbody id="tb"></tbody>
+  </table>
+ </div>
+
+ <div class="card chartcard" style="margin-top:16px">
+  <h2>Эффект против вклада при разном росте цены</h2>
+  <div class="sub" style="margin:-4px 0 8px">Где линия пересекает ноль — это «порог роста б/у» объекта. Выше порога квартира обгоняет вклад, ниже — проигрывает. Галочкой в таблице выбираешь, кого показать (до 8).</div>
+  <div id="chart"></div>
+  <div class="legend" id="legend"></div>
+ </div>
+
+ <div class="card">
+  <h2>Как читать и чего модель не считает</h2>
+  <div class="note" id="notes"></div>
+ </div>
+
+ <div class="foot" id="foot"></div>
+</div>
+
+<div class="ovl" id="ovl" hidden><div class="mbox" id="mbox"></div></div>
+
+<script>
+/*DATA-START*/
+const OBJECTS = [
+ {
+  "short": "7 небо",
+  "district": "Пушкино (МО)",
+  "shortlist": true,
+  "rooms": "1к",
+  "finish": "предчистовая",
+  "finish_raw": "предчистовая (white box)",
+  "url": "https://xn----dtbjjb4adhjrlq.xn--p1ai/properties/item/112257/12880097",
+  "price": 10666150,
+  "area": 47.3,
+  "reno_psm": 75000,
+  "reno_months": 6,
+  "deliver_month": 0,
+  "rent_mo": 65000,
+  "real_rent": 62000,
+  "opt_rent": 75000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Акценты",
+  "district": "Москва, Вост. Дегунино (САО)",
+  "shortlist": true,
+  "rooms": "студия",
+  "finish": "без отделки",
+  "finish_raw": "без отделки (bare)",
+  "url": "https://accenty.ru/flats/kvartira-studia-28.3m-11-7-04",
+  "price": 14461014,
+  "area": 28.5,
+  "reno_psm": 95000,
+  "reno_months": 6,
+  "deliver_month": 15,
+  "rent_mo": 75000,
+  "real_rent": 63000,
+  "opt_rent": 86000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Свет",
+  "district": "Москва, Зап. Дегунино (САО)",
+  "shortlist": true,
+  "rooms": "1к",
+  "finish": "без отделки",
+  "finish_raw": "без отделки (bare)",
+  "url": "",
+  "price": 21407291,
+  "area": 47.0,
+  "reno_psm": 95000,
+  "reno_months": 6,
+  "deliver_month": 30,
+  "rent_mo": 80000,
+  "real_rent": 70000,
+  "opt_rent": 92000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Кит",
+  "district": "Мытищи (МО)",
+  "shortlist": true,
+  "rooms": "2к",
+  "finish": "без отделки",
+  "finish_raw": "без отделки (bare)",
+  "url": "https://www.dom-kit.ru/turn1/apartments/house-1/section-1/floor-8/flat-61/",
+  "price": 17058468,
+  "area": 54.7,
+  "reno_psm": 95000,
+  "reno_months": 6,
+  "deliver_month": 0,
+  "rent_mo": 65000,
+  "real_rent": 54000,
+  "opt_rent": 75000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "SkyGarden",
+  "district": "Москва, Покровское-Стрешнево (СЗАО)",
+  "shortlist": true,
+  "rooms": "1к",
+  "finish": "предчистовая",
+  "finish_raw": "предчистовая (white box)",
+  "url": "https://fsk.ru/skygarden/flats/202899",
+  "price": 18172875,
+  "area": 37.5,
+  "reno_psm": 75000,
+  "reno_months": 6,
+  "deliver_month": 14,
+  "rent_mo": 85000,
+  "real_rent": 58000,
+  "opt_rent": 98000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Ситидзен",
+  "district": "Москва, Покровское-Стрешнево (СЗАО)",
+  "shortlist": true,
+  "rooms": "1к",
+  "finish": "без отделки",
+  "finish_raw": "без отделки (bare)",
+  "url": "https://www.mr-group.ru/catalog/apartments/sz-8-813-k-1-7-4-30704/",
+  "price": 18273584,
+  "area": 31.99,
+  "reno_psm": 95000,
+  "reno_months": 6,
+  "deliver_month": 36,
+  "rent_mo": 95000,
+  "real_rent": 55000,
+  "opt_rent": 109000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Фабрикант",
+  "district": "Пушкино (МО)",
+  "shortlist": true,
+  "rooms": "3к",
+  "finish": "предчистовая",
+  "finish_raw": "предчистовая (white box)",
+  "url": "https://xn----8sbadwpke2a0a0aq.xn--p1ai/properties/item/115288/13396188",
+  "price": 14688000,
+  "area": 72.0,
+  "reno_psm": 75000,
+  "reno_months": 6,
+  "deliver_month": 12,
+  "rent_mo": 70000,
+  "real_rent": 45000,
+  "opt_rent": 80000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Бестселлер",
+  "district": "Москва, Нижегородский (ЮВАО)",
+  "shortlist": true,
+  "rooms": "1к",
+  "finish": "предчистовая",
+  "finish_raw": "предчистовая (white box)",
+  "url": "https://baza.bz/kvartiry/2202",
+  "price": 19708398,
+  "area": 39.0,
+  "reno_psm": 75000,
+  "reno_months": 6,
+  "deliver_month": 21,
+  "rent_mo": 90000,
+  "real_rent": 70000,
+  "opt_rent": 104000,
+  "appr": 0.05,
+  "gap": 1
+ },
+ {
+  "short": "Ильинские луга",
+  "district": "Красногорск, Ильинское-Усово (МО)",
+  "shortlist": true,
+  "rooms": "1к",
+  "finish": "чистовая",
+  "finish_raw": "готовая отделка (под ключ)",
+  "url": "https://www.pik.ru/flat/994065",
+  "price": 10244720,
+  "area": 31.6,
+  "reno_psm": 30000,
+  "reno_months": 2,
+  "deliver_month": 14,
+  "rent_mo": 50000,
+  "real_rent": 45000,
+  "opt_rent": 58000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Нарвин",
+  "district": "Москва, Головинский (САО)",
+  "shortlist": true,
+  "rooms": "1к",
+  "finish": "чистовая",
+  "finish_raw": "готовая отделка (под ключ)",
+  "url": "https://www.pik.ru/flat/980211",
+  "price": 20163360,
+  "area": 40.8,
+  "reno_psm": 30000,
+  "reno_months": 2,
+  "deliver_month": 30,
+  "rent_mo": 85000,
+  "real_rent": 75000,
+  "opt_rent": 98000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Сиреневый парк",
+  "district": "Москва, Метрогородок (ВАО)",
+  "shortlist": true,
+  "rooms": "студия",
+  "finish": "без отделки",
+  "finish_raw": "черновая (без отделки)",
+  "url": "https://afi-park.ru/flat/570/",
+  "price": 15839267,
+  "area": 28.5,
+  "reno_psm": 85000,
+  "reno_months": 6,
+  "deliver_month": 0,
+  "rent_mo": 65000,
+  "real_rent": 58000,
+  "opt_rent": 75000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Татум",
+  "district": "Москва, Обручевский (ЮЗАО)",
+  "shortlist": true,
+  "rooms": "1к",
+  "finish": "без отделки",
+  "finish_raw": "без отделки (bare)",
+  "url": "https://tatum.forma.ru/flat/1051443/",
+  "price": 21183809,
+  "area": 35.5,
+  "reno_psm": 95000,
+  "reno_months": 6,
+  "deliver_month": 36,
+  "rent_mo": 95000,
+  "real_rent": 85000,
+  "opt_rent": 109000,
+  "appr": 0.05,
+  "gap": 1
+ },
+ {
+  "short": "Селигер Сити",
+  "district": "Зап.Дегунино, САО (м.Селигерская)",
+  "shortlist": false,
+  "rooms": "евро-2",
+  "finish": "без отделки",
+  "finish_raw": "без отделки (bare)",
+  "url": "https://www.mr-group.ru/projects/zhk-seliger-siti/",
+  "price": 20955749,
+  "area": 38.38,
+  "reno_psm": 95000,
+  "reno_months": 6,
+  "deliver_month": 6,
+  "rent_mo": 90000,
+  "real_rent": 82000,
+  "opt_rent": 103500,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Бусиновский",
+  "district": "Зап.Дегунино, САО (МЦД Грачёвская)",
+  "shortlist": false,
+  "rooms": "евро-2",
+  "finish": "чистовая",
+  "finish_raw": "чистовая → меблировка",
+  "url": "https://www.pik.ru/flat/953616",
+  "price": 17832032,
+  "area": 42.2,
+  "reno_psm": 30000,
+  "reno_months": 2,
+  "deliver_month": 6,
+  "rent_mo": 68000,
+  "real_rent": 62000,
+  "opt_rent": 78200,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Мичуринский",
+  "district": "Очаково-Матвеевское, ЗАО (м.Озёрная)",
+  "shortlist": false,
+  "rooms": "1к",
+  "finish": "чистовая",
+  "finish_raw": "чистовая → меблировка",
+  "url": "https://www.pik.ru/flat/983736",
+  "price": 18479704,
+  "area": 35.9,
+  "reno_psm": 30000,
+  "reno_months": 2,
+  "deliver_month": 20,
+  "rent_mo": 70000,
+  "real_rent": 60000,
+  "opt_rent": 80500,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Москворечье",
+  "district": "Москворечье-Сабурово, ЮАО (м.Каширская)",
+  "shortlist": false,
+  "rooms": "евро-2",
+  "finish": "чистовая",
+  "finish_raw": "чистовая → меблировка",
+  "url": "https://www.pik.ru/flat/1019709",
+  "price": 17841083,
+  "area": 37.9,
+  "reno_psm": 30000,
+  "reno_months": 2,
+  "deliver_month": 27,
+  "rent_mo": 65000,
+  "real_rent": 58000,
+  "opt_rent": 74750,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Страна Заречная",
+  "district": "Марьино, ЮВАО (МЦД Перерва)",
+  "shortlist": false,
+  "rooms": "евро-2",
+  "finish": "предчистовая",
+  "finish_raw": "предчистовая (white box)",
+  "url": "https://strana.com/msk/strana-zarechnaya",
+  "price": 17758810,
+  "area": 41.7,
+  "reno_psm": 75000,
+  "reno_months": 6,
+  "deliver_month": 27,
+  "rent_mo": 85000,
+  "real_rent": 62000,
+  "opt_rent": 97750,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Метроном",
+  "district": "Метрогородок, ВАО (Б-р Рокоссовского)",
+  "shortlist": false,
+  "rooms": "евро-2",
+  "finish": "предчистовая",
+  "finish_raw": "предчистовая (white box)",
+  "url": "https://moskva.brusnika.ru/flat/45621/",
+  "price": 18550000,
+  "area": 35.8,
+  "reno_psm": 75000,
+  "reno_months": 6,
+  "deliver_month": 6,
+  "rent_mo": 77000,
+  "real_rent": 62000,
+  "opt_rent": 88550,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Аквилон Бисайд",
+  "district": "Нижегородский, ЮВАО (м.Нижегородская)",
+  "shortlist": false,
+  "rooms": "1к",
+  "finish": "предчистовая",
+  "finish_raw": "предчистовая (white box)",
+  "url": "https://akvilon-beside.ru/",
+  "price": 18881946,
+  "area": 32.55,
+  "reno_psm": 75000,
+  "reno_months": 6,
+  "deliver_month": 15,
+  "rent_mo": 80000,
+  "real_rent": 73000,
+  "opt_rent": 92000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Гранель Нижегор.",
+  "district": "Нижегородский, ЮВАО (м.Нижегородская)",
+  "shortlist": false,
+  "rooms": "1к",
+  "finish": "чистовая",
+  "finish_raw": "чистовая → меблировка",
+  "url": "https://granelle.ru/",
+  "price": 19403567,
+  "area": 35.67,
+  "reno_psm": 30000,
+  "reno_months": 2,
+  "deliver_month": 27,
+  "rent_mo": 85000,
+  "real_rent": 70000,
+  "opt_rent": 97750,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Северный порт",
+  "district": "Северный порт, САО (м.Беломорская)",
+  "shortlist": false,
+  "rooms": "евро-2",
+  "finish": "без отделки",
+  "finish_raw": "без отделки → 95тр/м²",
+  "url": "https://flats.legenda-dom.ru/projects/severniyport-6/",
+  "price": 20997850,
+  "area": 38.0,
+  "reno_psm": 95000,
+  "reno_months": 6,
+  "deliver_month": 51,
+  "rent_mo": 140000,
+  "real_rent": 70000,
+  "opt_rent": 161000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "SET",
+  "district": "Очаково-Матвеевское, ЗАО (м.Аминьевская)",
+  "shortlist": false,
+  "rooms": "евро-2",
+  "finish": "без отделки",
+  "finish_raw": "без отделки → 95тр/м²",
+  "url": "https://www.mr-group.ru/catalog/apartments/st-1-1-k-b-25-5-22505/",
+  "price": 18958200,
+  "area": 37.12,
+  "reno_psm": 95000,
+  "reno_months": 6,
+  "deliver_month": 27,
+  "rent_mo": 110000,
+  "real_rent": 90000,
+  "opt_rent": 126500,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Левел Селигерская",
+  "district": "Зап.Дегунино, САО (м.Селигерская)",
+  "shortlist": false,
+  "rooms": "евро-2",
+  "finish": "без отделки",
+  "finish_raw": "без отделки → 95тр/м²",
+  "url": "https://level.ru/selig/flat/1room/5-1-555/",
+  "price": 16995000,
+  "area": 34.7,
+  "reno_psm": 95000,
+  "reno_months": 6,
+  "deliver_month": 6,
+  "rent_mo": 100000,
+  "real_rent": 75000,
+  "opt_rent": 115000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Нарвин (лот2)",
+  "district": "Головинский, САО (м.Водный стадион)",
+  "shortlist": false,
+  "rooms": "1к?",
+  "finish": "чистовая",
+  "finish_raw": "готовая отделка → меблировка 30тр/м²",
+  "url": "https://www.pik.ru/flat/979560",
+  "price": 19064000,
+  "area": 41.2,
+  "reno_psm": 30000,
+  "reno_months": 2,
+  "deliver_month": 30,
+  "rent_mo": 120000,
+  "real_rent": 82000,
+  "opt_rent": 138000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Левел Звенигородская",
+  "district": "Хорошёво-Мнёвники, СЗАО (м.Хорошёвская / стр. Звенигородская)",
+  "shortlist": false,
+  "rooms": "1к",
+  "finish": "без отделки",
+  "finish_raw": "без отделки → 95тр/м²",
+  "url": "https://level.ru/zvenig/flat/1room/2-456/",
+  "price": 19700000,
+  "area": 36.0,
+  "reno_psm": 95000,
+  "reno_months": 6,
+  "deliver_month": 28,
+  "rent_mo": 120000,
+  "real_rent": 85000,
+  "opt_rent": 138000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Среда Лобачевского",
+  "district": "Очаково-Матвеевское, ЗАО (м.Аминьевская)",
+  "shortlist": false,
+  "rooms": "евро-2",
+  "finish": "без отделки",
+  "finish_raw": "без отделки → 95тр/м²",
+  "url": "https://sreda.ru/flats/987539",
+  "price": 20258000,
+  "area": 34.4,
+  "reno_psm": 95000,
+  "reno_months": 6,
+  "deliver_month": 19,
+  "rent_mo": 120000,
+  "real_rent": 80000,
+  "opt_rent": 138000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "Сиреневый 1к 38.9",
+  "district": "Москва, Метрогородок (ВАО)",
+  "shortlist": false,
+  "rooms": "1к",
+  "finish": "без отделки",
+  "finish_raw": "черновая, дом сдан",
+  "url": "https://afi-park.ru/flat/9844/",
+  "price": 17766176,
+  "area": 38.9,
+  "reno_psm": 75000,
+  "reno_months": 6,
+  "deliver_month": 0,
+  "rent_mo": 78000,
+  "real_rent": 70000,
+  "opt_rent": 89700,
+  "appr": 0.05,
+  "gap": 0
+ }
+];
+/*DATA-END*/
+
+/*ENGINE-START*/
+// ---------------------------------------------------------------- допущения
+const T0Y = 2026, T0M = 9;                  // t0 = сен 2026 (полная оплата ДДУ)
+const TAXFREE_Y = 2031, TAXFREE_M = 10;     // НДФЛ 0 с окт 2031
+const NDFL_LO = 0.13, NDFL_HI = 0.15, NDFL_STEP = 2_400_000;
+const BUDGET = 20_000_000;                  // условный бюджет; на «эффект» не влияет
+
+const GDEF = {
+  exitYear: 2032,
+  // альтернатива деньгам: вклад/ОФЗ нетто. Лестница по умолчанию = OPP из exit_horizon.py
+  oppMode: 'ladder',   // 'ladder' | 'flat'
+  opp2627: 0.14,
+  opp28:   0.12,
+  opp2932: 0.10,
+  opp33:   0.09,
+  oppFlat: 0.10,
+  mortRate: 0.06,
+  loanCap: 12_000_000,
+  term: 30,
+  downMin: 0.20,
+  vacancy: 0.08,
+  rentTax: 0.04,
+  turnover: 0.04,
+  maint: 0.05,
+  propTax: 0.001,
+  rentIdx: 0.05,
+  saleCost: 0.03,
+  renoBack: 1.00,      // доля ремонта, возвращаемая в цене продажи
+};
+
+function oppRate(y, G){
+  if (G.oppMode === 'flat') return G.oppFlat;
+  if (y <= 2027) return G.opp2627;
+  if (y === 2028) return G.opp28;
+  if (y <= 2032) return G.opp2932;
+  return G.opp33;
+}
+
+// ------------------------------------------------------------------ финансы
+function pmt(rate, years, pv){
+  const i = rate/12, n = years*12;
+  if (pv <= 0) return 0;
+  if (i === 0) return pv/n;
+  return pv*i/(1 - Math.pow(1+i, -n));
+}
+function bal1(loan, rate, years, m){
+  if (loan <= 0) return 0;
+  const i = rate/12, n = years*12;
+  if (i === 0) return Math.max(loan - loan*m/n, 0);
+  const p = loan*i/(1 - Math.pow(1+i, -n));
+  return loan*Math.pow(1+i, m) - p*(Math.pow(1+i, m) - 1)/i;
+}
+function xirr(cfs){
+  const d0 = cfs[0][0];
+  const npv = r => cfs.reduce((s,[d,cf]) => s + cf/Math.pow(1+r, (d-d0)/86400000/365), 0);
+  let lo = -0.9999, hi = 1000;
+  if (npv(lo)*npv(hi) > 0) return null;
+  for (let k=0;k<300;k++){
+    const mid = (lo+hi)/2;
+    if (npv(lo)*npv(mid) < 0) hi = mid; else lo = mid;
+  }
+  return (lo+hi)/2;
+}
+function addMonths(y, m, k){
+  const t = y*12 + (m-1) + k;
+  return [Math.floor(t/12), t%12 + 1];
+}
+function ndflOnSale(saleNet, basis, exitY){
+  // продажа считается декабрём года выхода
+  if (exitY > TAXFREE_Y || (exitY === TAXFREE_Y && 12 >= TAXFREE_M)) return 0;
+  const gain = Math.max(saleNet - basis, 0);
+  return NDFL_LO*Math.min(gain, NDFL_STEP) + NDFL_HI*Math.max(gain - NDFL_STEP, 0);
+}
+function netRentYear(rentMo, price, G){
+  const gross = 12*rentMo;
+  const eff = gross*(1 - G.vacancy);
+  return eff - eff*G.rentTax - gross*G.turnover - gross*G.maint - G.propTax*price;
+}
+
+// ------------------------------------------------------------- схема оплаты
+// Как оплачивается квартира. По умолчанию (pay пустой) — семейная ипотека
+// на глобальных условиях, ровно как считалось раньше.
+//   family : льготная ставка/лимит/взнос/срок берутся из общих параметров
+//   custom : {downPct, rate, term, cap}  — один кредит на своих условиях
+//   two    : {downPct, capAmt, rate1, term1, rate2, term2} — льготный транш + рыночный на остаток
+//   cash   : кредита нет, вся цена своими деньгами в t0
+//   inst   : рассрочка застройщика {downPct, months, everyN, balloonPct, markup, mort, mortRate, mortTerm}
+const PAY_MODES = {family:'Семейная ипотека', custom:'Своя ипотека', two:'Два транша',
+                   cash:'100% свои', inst:'Рассрочка'};
+
+// Итог: down — своими в t0; own — разовые платежи своими позже (месяц от t0);
+// tranches — кредиты (у каждого своя ставка, срок и месяц начала);
+// paid — сколько всего отдано за саму квартиру (в рассрочке с удорожанием это больше цены).
+// Цифры приходят из формы и из чужой ссылки, поэтому каждую зажимаем в разумные
+// границы: иначе «срок 999999 лет» или пустое поле роняют расчёт в NaN, а длинный
+// график рассрочки может подвесить страницу.
+const clamp = (v, lo, hi, d) => {
+  const x = +v;
+  return isNaN(x) ? d : Math.min(hi, Math.max(lo, x));
+};
+function financing(p, G){
+  const raw = p.pay && PAY_MODES[p.pay.mode] ? p.pay : {mode:'family'};
+  const pay = Object.assign({}, raw, {
+    downPct:    clamp(raw.downPct, 0, 1, G.downMin),
+    rate:       clamp(raw.rate, 0, 1, G.mortRate),
+    rate1:      clamp(raw.rate1, 0, 1, G.mortRate),
+    rate2:      clamp(raw.rate2, 0, 1, 0.18),
+    mortRate:   clamp(raw.mortRate, 0, 1, G.mortRate),
+    term:       Math.round(clamp(raw.term, 1, 50, G.term)),
+    term1:      Math.round(clamp(raw.term1, 1, 50, G.term)),
+    term2:      Math.round(clamp(raw.term2, 1, 50, G.term)),
+    mortTerm:   Math.round(clamp(raw.mortTerm, 1, 50, G.term)),
+    cap:        clamp(raw.cap, 0, 1e12, 0),
+    capAmt:     clamp(raw.capAmt, 0, 1e12, G.loanCap),
+    months:     Math.round(clamp(raw.months, 1, 360, 12)),
+    everyN:     Math.round(clamp(raw.everyN, 1, 60, 1)),
+    balloonPct: clamp(raw.balloonPct, 0, 1, 0),
+    markup:     clamp(raw.markup, 0, 2, 0),
+  });
+  const price = p.price;
+  const tr = (loan, rate, term, startIdx) => ({
+    loan, rate, term, startIdx: startIdx || 0, mp: pmt(rate, term, loan),
+  });
+
+  if (pay.mode === 'cash') return {mode:'cash', down: price, tranches: [], own: [], paid: price};
+
+  if (pay.mode === 'custom'){
+    const cap = pay.cap > 0 ? pay.cap : Infinity;
+    const loan = Math.max(0, Math.min((1 - pay.downPct)*price, cap));
+    return {mode:'custom', down: price - loan, tranches: loan > 0 ? [tr(loan, pay.rate, pay.term)] : [],
+            own: [], paid: price};
+  }
+
+  if (pay.mode === 'two'){
+    const total = Math.max(0, (1 - pay.downPct)*price);   // сколько всего в кредит
+    const l1 = Math.min(total, Math.max(0, pay.capAmt));  // льготный транш ограничен лимитом
+    const l2 = total - l1;                                // остаток по рыночной ставке
+    const t = [];
+    if (l1 > 0) t.push(tr(l1, pay.rate1, pay.term1));
+    if (l2 > 0) t.push(tr(l2, pay.rate2, pay.term2));
+    return {mode:'two', down: price - total, tranches: t, own: [], paid: price};
+  }
+
+  if (pay.mode === 'inst'){
+    const total = price*(1 + pay.markup);                 // цена с удорожанием за рассрочку
+    const down = price*pay.downPct;
+    const balloon = price*pay.balloonPct;                 // остаток к сдаче
+    const everyN = pay.everyN;
+    const months = Math.max(everyN, pay.months);
+    const k = Math.max(1, Math.floor(months/everyN));     // сколько равных платежей помещается
+    const mid = Math.max(0, total - down - balloon);
+    const own = [];
+    for (let i = 1; i <= k; i++) own.push({idx: i*everyN, amt: mid/k});
+    const t = [];
+    if (balloon > 0){
+      if (pay.mort) t.push(tr(balloon, pay.mortRate, pay.mortTerm, months));  // остаток в ипотеку с конца рассрочки
+      else own.push({idx: months, amt: balloon});
+    }
+    return {mode:'inst', down, tranches: t, own, paid: total, instEnd: months};
+  }
+
+  // family — как было: кредит 80% цены, но не больше лимита льготы; взнос добирает остальное
+  const loan = Math.min((1 - G.downMin)*price, G.loanCap);
+  return {mode:'family', down: price - loan, tranches: loan > 0 ? [tr(loan, G.mortRate, G.term)] : [],
+          own: [], paid: price};
+}
+
+// ------------------------------------------------------------------- модель
+// p: {price, area, rentMo, renoTotal, appr, deliverMonth, renoMonths, gap, rent(bool), pay}
+function run(p, G, opts){
+  opts = opts || {};
+  const exitY = G.exitYear;
+  const F = financing(p, G);
+  const down = F.down;
+  const loan = F.tranches.reduce((s,t) => s + t.loan, 0);
+  const mp = F.tranches.reduce((s,t) => s + t.mp, 0);
+  const renting = p.rent !== false;
+  const renoTotal = renting ? p.renoTotal : 0;
+  const renoMonths = renting ? p.renoMonths : 0;
+
+  // старт аренды = ключи + ремонт (+ исходный зазор объекта)
+  const startIdx = p.deliverMonth + renoMonths + (p.gap||0);
+  const [rsY, rsM] = addMonths(T0Y, T0M, startIdx);
+  const renoDoneY = renting ? rsY : 9999;
+  const firstFullY = rsY + (rsM > 1 ? 1 : 0);
+  const netFull = renting ? netRentYear(p.rentMo, p.price, G) : 0;
+
+  const renoInYear = y => {
+    if (!renting || renoTotal <= 0 || renoMonths <= 0) return 0;
+    let [yy, mm] = addMonths(T0Y, T0M, p.deliverMonth);
+    let cnt = 0;
+    for (let k=0;k<renoMonths;k++){
+      if (yy === y) cnt++;
+      mm++; if (mm > 12){ mm = 1; yy++; }
+    }
+    return renoTotal*cnt/renoMonths;
+  };
+  const rentInYear = y => {
+    if (!renting || y < rsY) return 0;
+    if (y === rsY) return netFull*(12 - rsM + 1)/12;
+    return netFull*Math.pow(1 + G.rentIdx, Math.max(y - firstFullY, 0));
+  };
+  // сколько месяцев транша t оплачено к концу года y (транш может стартовать не в t0)
+  const mEnd = (t, y) => y < T0Y ? 0
+    : Math.max(0, Math.min((y - T0Y)*12 + (12 - T0M + 1) - t.startIdx, t.term*12));
+  const mmEnd = y => F.tranches.length ? mEnd(F.tranches[0], y) : 0;
+
+  // разовые платежи своими по графику рассрочки
+  const ownYear = {}, ownAfter = {};
+  for (const q of F.own){
+    const yy = addMonths(T0Y, T0M, q.idx)[0];
+    ownYear[yy] = (ownYear[yy] || 0) + q.amt;
+  }
+  // если рассрочка не закрыта к выходу — недоплаченное гасится из цены продажи
+  const unpaidAfter = y => F.own.reduce((s,q) => s + (addMonths(T0Y, T0M, q.idx)[0] > y ? q.amt : 0), 0);
+
+  const rows = [], cfs = [];
+  let w = BUDGET, base = BUDGET, cum = 0, lo = 0;
+  for (let y = T0Y; y <= exitY; y++){
+    const own = (y === T0Y ? -down : 0) - (ownYear[y] || 0) - renoInYear(y);
+    const rr = rentInYear(y);
+    const mo = -F.tranches.reduce((s,t) => s + t.mp*(mEnd(t, y) - mEnd(t, y-1)), 0);
+    const net = own + rr + mo;
+    const asset = p.price*Math.pow(1 + p.appr, y - T0Y)
+                + ((renting && y >= renoDoneY) ? renoTotal*G.renoBack : 0);
+    const bal = F.tranches.reduce((s,t) => s + bal1(t.loan, t.rate, t.term, mEnd(t, y)), 0);
+    let sale = 0, tax = 0, flow = net;
+    if (y === exitY){
+      const grossSale = asset*(1 - G.saleCost);
+      tax = ndflOnSale(grossSale, F.paid + renoTotal, y);
+      sale = grossSale - bal - tax - unpaidAfter(y);
+      flow += sale;
+    }
+    cfs.push([Date.UTC(y, y === T0Y ? T0M-1 : 6, 1), flow]);
+    cum += net; lo = Math.min(lo, cum);
+    const f = Math.pow(1 + oppRate(y, G), y === T0Y ? 4/12 : 1);
+    w = w*f + net + sale;
+    base *= f;
+    rows.push({y, own, rent:rr, mo, net, asset, bal, sale, tax, flow});
+  }
+  const last = rows[rows.length-1];
+  return {
+    down, loan, mp, netFull,
+    cfYear: netFull - mp*12,
+    preRentMonths: startIdx,
+    rentStart: [rsY, rsM],
+    rows,
+    xirr: opts.noXirr ? null : xirr(cfs),
+    asset: last.asset, bal: last.bal, sale: last.sale, tax: last.tax,
+    minCash: -lo,
+    invested: down + F.own.reduce((s,q) => s + q.amt, 0) + renoTotal + mp*startIdx,
+    wealth: w, oppBase: base, effect: w - base,
+    fin: F,
+  };
+}
+
+function breakevenAppr(p, G, hi){
+  hi = hi === undefined ? 0.30 : hi;
+  const eff = a => run(Object.assign({}, p, {appr:a}), G, {noXirr:true}).effect;
+  if (eff(hi) < 0) return null;
+  let lo = 0;
+  if (eff(lo) >= 0) return 0;
+  for (let k=0;k<70;k++){
+    const mid = (lo+hi)/2;
+    if (eff(mid) < 0) lo = mid; else hi = mid;
+  }
+  return (lo+hi)/2;
+}
+
+// params объекта после пользовательских правок
+function params(o, ov){
+  // те же границы, что и в financing: данные могут прийти из формы или чужой ссылки
+  const price = clamp(num(ov.price, o.price), 0, 1e12, 0);
+  const area = clamp(o.area, 0.1, 100_000, 1);
+  const renoPsm = ov.flip ? 0 : clamp(num(ov.renoPsm, o.reno_psm), 0, 1e7, 0);
+  const renoMonths = ov.flip ? 0 : Math.round(clamp(num(ov.renoMonths, o.reno_months), 0, 120, 0));
+  return {
+    price, area,
+    rentMo: ov.flip ? 0 : clamp(num(ov.rent, o.rent_mo), 0, 1e9, 0),
+    renoTotal: renoPsm*area,
+    renoPsm, renoMonths,
+    appr: clamp(num(ov.appr, o.appr), -0.5, 1, 0),
+    deliverMonth: Math.round(clamp(o.deliver_month + num(ov.delay, 0), 0, 360, 0)),
+    gap: o.gap || 0,
+    rent: !ov.flip,
+    pay: ov.pay || o.pay || null,
+  };
+}
+function num(v, d){ return (v === undefined || v === null || v === '' || isNaN(+v)) ? d : +v; }
+
+// Дефолты полей под каждый режим оплаты: чтобы форма открывалась заполненной
+// разумными цифрами, а не пустой. Семейная берёт значения из общих параметров.
+function payDefaults(mode, G){
+  if (mode === 'custom') return {mode, downPct: G.downMin, rate: 0.18, term: 30, cap: 0};
+  if (mode === 'two')    return {mode, downPct: G.downMin, capAmt: G.loanCap,
+                                 rate1: G.mortRate, term1: G.term, rate2: 0.18, term2: G.term};
+  if (mode === 'cash')   return {mode};
+  if (mode === 'inst')   return {mode, downPct: 0.30, months: 24, everyN: 1, balloonPct: 0,
+                                 markup: 0, mort: false, mortRate: G.mortRate, mortTerm: G.term};
+  return {mode: 'family'};
+}
+// Короткая подпись схемы для ячейки таблицы
+function payLabel(pay, G){
+  if (!pay || pay.mode === 'family') return 'Семейная 6%';
+  if (pay.mode === 'cash') return '100% свои';
+  if (pay.mode === 'custom') return `Своя ${(pay.rate*100).toFixed(1).replace('.0','')}%`;
+  if (pay.mode === 'two') return `${(pay.rate1*100).toFixed(1).replace('.0','')}% + ${(pay.rate2*100).toFixed(1).replace('.0','')}%`;
+  if (pay.mode === 'inst') return `Рассрочка ${Math.round(pay.months)} мес`;
+  return PAY_MODES[pay.mode] || '—';
+}
+/*ENGINE-END*/
+
+/* ------------------------------------------------------------------ состояние */
+const LS = 'invest-rf-dash-v1';
+let G = Object.assign({}, GDEF);
+let OV = {};          // short -> {price,appr,rent,renoPsm,renoMonths,delay,exitYear,flip,pay,on,pick}
+let CUSTOM = [];      // объекты, добавленные руками (живут в браузере)
+let COL_OFF = {};     // свёрнутые группы столбцов
+let sortKey = 'effect', sortDir = -1;
+let fromLink = false; // сценарий открыт по чужой ссылке и ещё не сохранён себе
+
+// Все объекты = базовый набор из модели + добавленные руками.
+// OBJECTS трогать нельзя: этот массив вырезает сверщик verify_dashboard.js.
+let ALL = OBJECTS.slice();
+function rebuild(){ ALL = OBJECTS.concat(CUSTOM); }
+
+function ovOf(k){
+  if (!OV[k]) OV[k] = {};
+  return OV[k];
+}
+function isOn(o){ const v = ovOf(o.short).on; return v === undefined ? !!o.shortlist : !!v; }
+function isPick(o){ return !!ovOf(o.short).pick; }
+
+// ovOf() заводит пустую запись на каждый объект, до которого дотянулась таблица.
+// В сохранение и в ссылку такие пустышки не пускаем: они врут про «правки» и раздувают ссылку.
+function realOV(){
+  const out = {};
+  for (const k of Object.keys(OV)) if (OV[k] && Object.keys(OV[k]).length) out[k] = OV[k];
+  return out;
+}
+function state(){ return {G, OV: realOV(), CUSTOM, COL_OFF}; }
+// склонение: 1 объект, 2 объекта, 5 объектов
+const plural = (n, one, few, many) => {
+  const a = Math.abs(n) % 100, b = a % 10;
+  return `${n} ${a > 10 && a < 20 ? many : b === 1 ? one : b >= 2 && b <= 4 ? few : many}`;
+};
+function save(){
+  if (fromLink) return;   // чужой сценарий не затирает твой, пока ты его не принял
+  try{ localStorage.setItem(LS, JSON.stringify(state())); }catch(e){}
+}
+function apply(s){
+  if (!s) return false;
+  if (s.G) G = Object.assign({}, GDEF, s.G);
+  G.exitYear = Math.round(clamp(G.exitYear, 2026, 2100, GDEF.exitYear));  // иначе цикл по годам не кончится
+  OV = (s.OV && typeof s.OV === 'object') ? s.OV : {};
+  // имена объектов — ключи для правок, поэтому дубли в наборе недопустимы
+  const seen = new Set(OBJECTS.map(o => o.short));
+  CUSTOM = (Array.isArray(s.CUSTOM) ? s.CUSTOM : []).slice(0, 200)
+    .filter(c => c && c.short && !seen.has(c.short) && seen.add(c.short));
+  COL_OFF = s.COL_OFF || {};
+  rebuild();
+  return true;
+}
+function load(){
+  try{ apply(JSON.parse(localStorage.getItem(LS) || 'null')); }catch(e){}
+  rebuild();
+}
+
+/* ------------------------------------------------------------------ формат */
+const FIN_ORDER = ['чистовая', 'предчистовая', 'без отделки'];  // от «ничего не делать» к «полный ремонт»
+const finCls = f => 'fin f' + Math.max(0, FIN_ORDER.indexOf(f));
+const fmtM  = v => (v/1e6).toFixed(2);
+const fmtM1 = v => (v/1e6).toFixed(1);
+const fmtK  = v => Math.round(v/1000).toLocaleString('ru-RU');
+const fmtP  = v => v === null || v === undefined ? '—' : (v*100).toFixed(1) + '%';
+const sgn   = v => (v > 0 ? '+' : '') + fmtM(v);
+const cls   = v => v > 0 ? 'pos' : (v < 0 ? 'neg' : 'mut');
+// Свои объекты и объекты из чужой ссылки содержат текст, введённый руками,
+// поэтому всё, что попадает в HTML, экранируем, а ссылки пускаем только http(s).
+const esc = s => String(s === undefined || s === null ? '' : s)
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const safeUrl = u => /^https?:\/\/[^\s]+$/i.test(String(u||'').trim()) ? String(u).trim() : '';
+
+// Расшифровка схемы оплаты для подсказки над ячейкой
+function payHint(d){
+  const pay = d.p.pay, F = d.r.fin, mo = Math.round(d.r.mp/1000);
+  const head = `${PAY_MODES[F.mode]}: взнос ${fmtM(F.down)} млн`;
+  if (F.mode === 'cash') return `${PAY_MODES.cash}: вся цена ${fmtM(d.p.price)} млн своими, кредита и платежа нет`;
+  if (F.mode === 'inst'){
+    const n = F.own.length, per = n ? Math.round(F.own[0].amt/1000) : 0;
+    return `${head}, дальше ${n} платежей по ~${per} тр до ${Math.round(pay.months)}-го месяца` +
+           (F.tranches.length ? `, остаток в ипотеку ${(pay.mortRate*100).toFixed(1)}% → ${mo} тр/мес` : '') +
+           (pay.markup ? `. Удорожание ${(pay.markup*100).toFixed(1)}%` : '');
+  }
+  const tr = F.tranches.map(t => `${fmtM(t.loan)} млн под ${(t.rate*100).toFixed(1)}% на ${t.term} лет`).join(' + ');
+  return `${head}, кредит ${tr || '0'} → платёж ${mo} тр/мес`;
+}
+
+/* ------------------------------------------------------------------ расчёт всех */
+function gFor(ov){
+  const e = num(ov.exitYear, null);
+  if (!e) return G;
+  const y = Math.round(clamp(e, 2026, 2100, G.exitYear));
+  return y === G.exitYear ? G : Object.assign({}, G, {exitYear: y});
+}
+function computeAll(){
+  const out = [];
+  for (const o of ALL){
+    const ov = ovOf(o.short);
+    const Gi = gFor(ov);
+    const p = params(o, ov);
+    out.push({o, ov, p, G:Gi, r:run(p, Gi), be:breakevenAppr(p, Gi), on:isOn(o)});
+  }
+  return out;
+}
+
+/* ------------------------------------------------------------------ таблица */
+const COLS = [
+  {g:'drv', k:'appr',   h:'Рост, %/год',    edit:'appr',       t:'Главный драйвер. Сравни с колонкой «Порог роста»'},
+
+  {g:'in', k:'price',   h:'Цена, млн',      edit:'price', t:'Цена сделки. Правь, если есть торг или другая цифра от застройщика'},
+  {g:'in', k:'area',    h:'Площадь, м²',    calc:d => String(d.o.area).replace('.', ',')},
+  {g:'in', k:'finish',  h:'Отделка на сдаче', calc:d => `<span class="${finCls(d.o.finish)}">${d.o.finish}</span>`,
+                        num:d => FIN_ORDER.indexOf(d.o.finish),
+                        t:'Что застройщик отдаёт на ключах. От неё зависит и смета ремонта, и сколько месяцев объект стоит без аренды'},
+  {g:'in', k:'psm',     h:'₽/м²',           calc:d => Math.round(d.p.price/d.o.area).toLocaleString('ru-RU')},
+  {g:'in', k:'rent',    h:'Аренда, тр/мес', edit:'rent',       t:'Аренда 1-го года, дальше индексируется'},
+  {g:'in', k:'rpsm',    h:'Аренда, ₽/м²/мес', calc:d => d.p.rent ? Math.round(d.p.rentMo/d.o.area).toLocaleString('ru-RU') : '—',
+                        num:d => d.p.rent ? d.p.rentMo/d.o.area : 0,
+                        t:'Аренда за метр: так видно, где ставка выбита из рынка. Живой ориентир ~1570 ₽/м²/мес (студия 35 м² в Пушкино за 55тр)'},
+  {g:'in', k:'renoPsm', h:'Ремонт, тр/м²',  edit:'renoPsm',
+                        t:'Смета под отделку на сдаче: без отделки 85-95тр, предчистовая (white box) 75тр, чистовая 30тр (это уже не ремонт, а меблировка)'},
+  {g:'in', k:'renoMonths', h:'Ремонт, мес', edit:'renoMonths', t:'Сдвигает старт аренды: аренда = ключи + ремонт'},
+  {g:'in', k:'delay',   h:'Задержка, мес',  edit:'delay',      t:'Насколько застройщик опоздает с ключами. Каждый месяц = ещё один платёж вхолостую'},
+  {g:'in', k:'exitYear',h:'Выход, год',     edit:'exitYear',   t:'Свой год продажи для этого объекта. Пусто = общий год сверху'},
+
+  {g:'deal', k:'pay',     h:'Схема оплаты', sep:1,
+                calc:d => `<button class="paycell${d.ov.pay?' ch':''}" data-pay="${esc(d.o.short)}"
+                            title="${esc(payHint(d))}">${esc(payLabel(d.p.pay, d.G))}</button>`,
+                num:d => Object.keys(PAY_MODES).indexOf(d.p.pay ? d.p.pay.mode : 'family'),
+                t:'Чем платим: семейная ипотека, своя ипотека, льготный + рыночный транш, 100% свои или рассрочка застройщика. Клик по ячейке — настроить'},
+  {g:'deal', k:'down',    h:'Взнос, млн',        calc:d => fmtM(d.r.down)},
+  {g:'deal', k:'loan',    h:'Кредит, млн',       calc:d => fmtM(d.r.loan)},
+  {g:'deal', k:'mp',      h:'Платёж, тр/мес',    calc:d => fmtK(d.r.mp)},
+  {g:'deal', k:'minCash', h:'Своих нужно, млн',  calc:d => fmtM(d.r.minCash), t:'Самая глубокая просадка кэша: столько своих денег реально надо иметь'},
+  {g:'deal', k:'preRent', h:'Мес. без дохода',   calc:d => d.p.rent ? d.r.preRentMonths : '—', t:'Сколько месяцев платишь ипотеку до первой аренды'},
+
+  {g:'res', k:'cfYear',  h:'Поток, тр/год', sep:1, calc:d => d.p.rent ? fmtK(d.r.cfYear) : '—', num:d => d.p.rent ? d.r.cfYear : 0, color:1},
+  {g:'res', k:'asset',   h:'Цена продажи, млн',  calc:d => fmtM(d.r.asset)},
+  {g:'res', k:'tax',     h:'НДФЛ, млн',          calc:d => d.r.tax > 0 ? fmtM(d.r.tax) : '0', num:d => d.r.tax},
+  {g:'res', k:'sale',    h:'Кэш с продажи, млн', calc:d => fmtM(d.r.sale)},
+  {g:'res', k:'xirr',    h:'XIRR',               calc:d => fmtP(d.r.xirr), num:d => d.r.xirr === null ? -9 : d.r.xirr},
+  {g:'res', k:'effect',  h:'Эффект vs вклад, млн', calc:d => sgn(d.r.effect), num:d => d.r.effect, color:1, bar:1,
+                t:'Насколько капитал к году выхода больше (или меньше), чем если те же деньги просто лежали под процент'},
+  {g:'res', k:'be',      h:'Порог роста б/у',  calc:d => d.be === null ? '>30%' : fmtP(d.be), num:d => d.be === null ? 9 : d.be,
+                t:'При каком росте цены объект сравнивается с вкладом'},
+];
+const GRP = {drv:'Рост', in:'Цена, аренда, сроки', deal:'Сделка и деньги на входе', res:'Результат к году выхода'};
+const GRP_FIX = {drv:1};   // эту группу не сворачиваем: рост это то, по чему сравниваем
+
+function numOf(c, d){
+  if (c.num) return c.num(d);
+  const m = {price:d.p.price, area:d.o.area, psm:d.p.price/d.o.area, appr:d.p.appr, rent:d.p.rentMo,
+             renoPsm:d.p.renoPsm, renoMonths:d.p.renoMonths, delay:d.p.deliverMonth - d.o.deliver_month,
+             exitYear:d.G.exitYear,
+             down:d.r.down, loan:d.r.loan, mp:d.r.mp, minCash:d.r.minCash, preRent:d.r.preRentMonths,
+             asset:d.r.asset, sale:d.r.sale, tax:d.r.tax};
+  return m[c.k] !== undefined ? m[c.k] : 0;
+}
+
+function visCols(){ return COLS.filter(c => !COL_OFF[c.g]); }
+function grpSize(g){ return COLS.filter(c => c.g === g).length; }
+
+function chips(){
+  const box = document.getElementById('gchips');
+  box.innerHTML = '<span class="l">Группы столбцов:</span>' + Object.keys(GRP).map(g =>
+    GRP_FIX[g] ? '' : `<button class="gc ${COL_OFF[g]?'off':''}" data-grp="${g}">
+      ${COL_OFF[g]?'▸':'▾'} ${GRP[g]} <b>${grpSize(g)}</b></button>`).join('') +
+    `<span class="l">клик по заголовку группы в таблице делает то же</span>`;
+  box.querySelectorAll('[data-grp]').forEach(b => b.onclick = () => toggleGrp(b.dataset.grp));
+}
+function toggleGrp(g){
+  if (GRP_FIX[g]) return;
+  COL_OFF[g] = !COL_OFF[g];
+  if (COL_OFF[g] && COLS.find(c => c.k === sortKey && c.g === g)) sortKey = 'effect';
+  save(); render();
+}
+
+function head(){
+  const cols = visCols();
+  let g = '<th class="nm">Объект</th>', last = null, buf = 0;
+  const flush = () => { if (buf) g += `<th colspan="${buf}" class="${GRP_FIX[last]?'':'grp sep'}"
+      ${GRP_FIX[last]?'':`data-grp="${last}" title="клик: свернуть группу"`}>${GRP[last]}${GRP_FIX[last]?'':' ▾'}</th>`; };
+  for (const c of cols){
+    if (c.g !== last){ flush(); last = c.g; buf = 0; }
+    buf++;
+  }
+  flush();
+  const grow = document.getElementById('grow');
+  grow.innerHTML = g;
+  grow.querySelectorAll('[data-grp]').forEach(th => th.onclick = () => toggleGrp(th.dataset.grp));
+
+  const tr = document.getElementById('hrow');
+  tr.innerHTML = `<th class="nm">${ALL.length} объектов · ✓ в сравнении</th>` + cols.map(c =>
+    `<th class="srt ${c.sep?'sep':''} ${sortKey===c.k?'on':''}" data-k="${c.k}" ${c.t?`title="${c.t}"`:''}>${c.h}${sortKey===c.k?(sortDir<0?' ▾':' ▴'):''}</th>`).join('');
+  tr.querySelectorAll('th.srt').forEach(th => th.onclick = () => {
+    const k = th.dataset.k;
+    if (sortKey === k) sortDir = -sortDir; else { sortKey = k; sortDir = -1; }
+    render();
+  });
+}
+
+function render(){
+  const data = computeAll();
+  const shown = data.filter(d => d.on);
+  const maxAbs = Math.max(1, ...shown.map(d => Math.abs(d.r.effect)));
+
+  const col = COLS.find(c => c.k === sortKey) || COLS[COLS.length-2];
+  data.sort((a,b) => (b.on - a.on)                                   // выключенные — вниз
+                  || (numOf(col,a) - numOf(col,b))*sortDir
+                  || a.o.short.localeCompare(b.o.short));
+
+  head(); chips();
+  const tb = document.getElementById('tb');
+  tb.innerHTML = data.map(d => {
+    const o = d.o, ov = d.ov;
+    const cells = visCols().map(c => {
+      if (c.edit){
+        const cur = {price:d.p.price/1e6, appr:d.p.appr*100, rent:d.p.rentMo/1000,
+                     renoPsm:d.p.renoPsm/1000, renoMonths:d.p.renoMonths,
+                     delay:d.p.deliverMonth - o.deliver_month, exitYear:d.G.exitYear}[c.edit];
+        const orig = {price:o.price/1e6, appr:o.appr*100, rent:o.rent_mo/1000,
+                      renoPsm:o.reno_psm/1000, renoMonths:o.reno_months, delay:0,
+                      exitYear:G.exitYear}[c.edit];
+        const ch = Math.abs(cur - orig) > 1e-9 ? ' ch' : '';
+        const step = {price:0.05, appr:0.5, rent:1, renoPsm:5, renoMonths:1, delay:1, exitYear:1}[c.edit];
+        const dis = (ov.flip && ['rent','renoPsm','renoMonths'].includes(c.edit)) ? ' disabled' : '';
+        const val = c.edit === 'price' ? cur.toFixed(2) : (Math.round(cur*100)/100);
+        return `<td class="${c.sep?'sep':''}"><input class="cell${c.edit==='price'?' w':''}${ch}" type="number" step="${step}"
+                 data-s="${o.short}" data-f="${c.edit}" value="${val}"${dis} title="было ${orig}"></td>`;
+      }
+      let v = c.calc(d);
+      let extra = '';
+      if (c.color) v = `<span class="${cls(numOf(c,d))}">${v}</span>`;
+      if (c.bar){
+        const e = d.r.effect, w = Math.abs(e)/maxAbs*50;
+        extra = `<span class="bar"><span class="z" style="left:50%"></span>` +
+                `<i style="${e>=0?`left:50%;width:${w}%;background:var(--good)`:`right:50%;width:${w}%;background:var(--bad)`}"></i></span>`;
+      }
+      return `<td class="${c.sep?'sep':''}">${v}${extra}</td>`;
+    }).join('');
+    const area = String(o.area).replace('.', ',');
+    const s = esc(o.short), url = safeUrl(o.url);
+    const name = url
+      ? `<a class="n1" href="${esc(url)}" target="_blank" rel="noopener noreferrer"
+           title="${s} — открыть лот на сайте застройщика">${s}</a>`
+      : `<span class="n1 nolink" title="${s} — прямой ссылки на лот в данных нет">${s}</span>`;
+    return `<tr class="${d.on?'':'off'}">
+      <td class="nm">
+        <div class="t">
+          <input type="checkbox" class="ck" data-s="${s}" data-f="on" ${d.on?'checked':''} title="учитывать в сравнении">
+          ${name}
+          <span class="spec" title="комнатность и площадь${String(o.rooms).endsWith('?')?' (комнатность выведена по площади, проверить)':''}">${esc(o.rooms)} · ${area} м²</span>
+          ${o.mine ? '<span class="tag my" title="объект добавлен тобой, хранится в этом браузере">мой</span>' : ''}
+        </div>
+        <div class="n2">
+          <span class="${finCls(o.finish)}" title="отделка на сдаче: ${esc(o.finish_raw || o.finish)}">${esc(o.finish)}</span>
+          <span class="loc" title="${esc(o.district)}">${esc(o.district)}</span>
+          <span class="tg ${isPick(o)?'on':''}" data-s="${s}" data-f="pick" title="показать на графике">график</span>
+          <span class="tg fl ${ov.flip?'on':''}" data-s="${s}" data-f="flip" title="флип: не ремонтируем и не сдаём, только держим и продаём">флип</span>
+          ${o.mine ? `<span class="tg" data-edit="${s}" title="изменить или удалить свой объект">править</span>` : ''}
+          <span title="месяц первой аренды">${d.p.rent ? `→ ${d.r.rentStart[1]}/${d.r.rentStart[0]}` : ''}</span>
+        </div>
+      </td>${cells}</tr>`;
+  }).join('');
+
+  tb.querySelectorAll('input.cell').forEach(inp => {
+    inp.onchange = () => {
+      const f = inp.dataset.f, ov = ovOf(inp.dataset.s);
+      const raw = inp.value === '' ? null : +inp.value;
+      if (raw === null || isNaN(raw)){ delete ov[f]; }
+      else ov[f] = {price:raw*1e6, appr:raw/100, rent:raw*1000, renoPsm:raw*1000,
+                    renoMonths:raw, delay:raw, exitYear:raw}[f];
+      save(); render();
+    };
+  });
+  tb.querySelectorAll('input.ck').forEach(ck => {
+    ck.onchange = () => { ovOf(ck.dataset.s)[ck.dataset.f] = ck.checked; save(); render(); };
+  });
+  tb.querySelectorAll('[data-pay]').forEach(b => b.onclick = () => payModal(b.dataset.pay));
+  tb.querySelectorAll('[data-edit]').forEach(b => b.onclick = () => caseModal(b.dataset.edit));
+  tb.querySelectorAll('.tg[data-f]').forEach(tg => {
+    tg.onclick = () => {
+      const ov = ovOf(tg.dataset.s), f = tg.dataset.f, now = !ov[f];
+      if (f === 'pick' && now && ALL.filter(x => isPick(x)).length >= 8){
+        alert('На графике максимум 8 объектов — сними галочку с кого-нибудь.');
+        return;
+      }
+      ov[f] = now; save(); render();
+    };
+  });
+
+  kpis(shown);
+  chart(data);
+  notes();
+  document.getElementById('foot').textContent =
+    `t0 сен 2026 · выход декабрь ${G.exitYear} · ${shown.length} объектов в сравнении · ` +
+    `оранжевым подсвечены изменённые тобой значения · всё сохраняется в браузере`;
+}
+
+function kpis(shown){
+  const best = shown.slice().sort((a,b) => b.r.effect - a.r.effect)[0];
+  const win = shown.filter(d => d.r.effect > 0);
+  const cheap = shown.slice().sort((a,b) => a.r.minCash - b.r.minCash)[0];
+  const oppTxt = 'вклад ' + oppText();
+  const el = (k,v,n,c) => `<div class="kpi"><div class="k">${k}</div><div class="v ${c||''}">${v}</div><div class="n">${n}</div></div>`;
+  document.getElementById('kpis').innerHTML = [
+    el('Лучший по эффекту', best ? best.o.short : '—',
+       best ? `${sgn(best.r.effect)} млн против вклада · XIRR ${fmtP(best.r.xirr)}` : '', best && best.r.effect>0?'pos':'neg'),
+    el('Обгоняют вклад', `${win.length} / ${shown.length}`,
+       `альтернатива: ${oppTxt}`, win.length?'pos':'neg'),
+    el('Самый низкий порог роста', best ? (shown.slice().sort((a,b)=>(a.be===null?9:a.be)-(b.be===null?9:b.be))[0].o.short) : '—',
+       best ? `нужен рост ${fmtP(shown.slice().sort((a,b)=>(a.be===null?9:a.be)-(b.be===null?9:b.be))[0].be)}/год` : ''),
+    el('Самый дешёвый вход', cheap ? cheap.o.short : '—',
+       cheap ? `${fmtM(cheap.r.minCash)} млн своих · платёж ${fmtK(cheap.r.mp)} тр/мес` : ''),
+  ].join('');
+}
+
+/* ------------------------------------------------------------------ график */
+const PAL = ['#4f9dfd','#2fbf87','#f0625d','#e0a03a','#a276f5','#38bec9','#e968b0','#8fa2b8'];
+function chart(data){
+  let picked = data.filter(d => isPick(d.o));
+  if (!picked.length) picked = data.filter(d => d.on).slice().sort((a,b) => b.r.effect - a.r.effect).slice(0,5);
+  const W = 1000, H = 340, L = 62, R = 14, TP = 12, B = 34;
+  const xs = [], N = 33;
+  for (let i=0;i<N;i++) xs.push(i*0.005);            // 0..16%
+  const series = picked.map((d,i) => ({
+    name: d.o.short + (d.p.rent ? '' : ' (флип)') + (d.G.exitYear !== G.exitYear ? ` ${d.G.exitYear}` : ''),
+    color: PAL[i%PAL.length],
+    pts: xs.map(a => run(Object.assign({}, d.p, {appr:a}), d.G, {noXirr:true}).effect),
+  }));
+  const all = series.flatMap(s => s.pts);
+  let ymin = Math.min(-1e6, ...all), ymax = Math.max(1e6, ...all);
+  const pad = (ymax - ymin)*0.08; ymin -= pad; ymax += pad;
+  const X = v => L + (v/0.16)*(W-L-R);
+  const Y = v => TP + (1 - (v-ymin)/(ymax-ymin))*(H-TP-B);
+
+  const gy = [];
+  const stepY = Math.max(1e6, Math.round((ymax-ymin)/6/1e6)*1e6);
+  for (let v = Math.ceil(ymin/stepY)*stepY; v <= ymax; v += stepY) gy.push(v);
+
+  let svg = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block">`;
+  svg += gy.map(v => `<line x1="${L}" x2="${W-R}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}"
+      stroke="var(--line)" stroke-width="${Math.abs(v)<1?1.6:1}" ${Math.abs(v)<1?'':'stroke-dasharray="3 4"'}/>
+      <text x="${L-8}" y="${(Y(v)+3.5).toFixed(1)}" text-anchor="end" font-size="10" fill="var(--tx3)" font-family="var(--mono)">${v/1e6>0?'+':''}${(v/1e6).toFixed(0)}</text>`).join('');
+  for (let a=0;a<=0.16001;a+=0.02){
+    svg += `<line x1="${X(a).toFixed(1)}" x2="${X(a).toFixed(1)}" y1="${TP}" y2="${H-B}" stroke="var(--line)" stroke-dasharray="2 5"/>
+            <text x="${X(a).toFixed(1)}" y="${H-B+15}" text-anchor="middle" font-size="10.5" fill="var(--tx3)">${(a*100).toFixed(0)}%</text>`;
+  }
+  svg += `<text x="${(L+W-R)/2}" y="${H-6}" text-anchor="middle" font-size="10.5" fill="var(--tx3)">рост цены, %/год</text>`;
+  svg += `<text x="${L-8}" y="${TP+2}" text-anchor="end" font-size="10" fill="var(--tx3)">млн ₽</text>`;
+  series.forEach(s => {
+    const dd = s.pts.map((v,i) => `${i?'L':'M'}${X(xs[i]).toFixed(1)},${Y(v).toFixed(1)}`).join(' ');
+    svg += `<path d="${dd}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round"/>`;
+    // точка пересечения нуля
+    for (let i=1;i<s.pts.length;i++){
+      if ((s.pts[i-1] < 0) !== (s.pts[i] < 0)){
+        const t = -s.pts[i-1]/(s.pts[i]-s.pts[i-1]);
+        const ax = xs[i-1] + t*(xs[i]-xs[i-1]);
+        svg += `<circle cx="${X(ax).toFixed(1)}" cy="${Y(0).toFixed(1)}" r="3.5" fill="${s.color}" stroke="var(--panel)" stroke-width="1.5"/>`;
+        break;
+      }
+    }
+  });
+  // вертикаль «ожидаемый рост»
+  svg += `<line x1="${X(0.07)}" x2="${X(0.07)}" y1="${TP}" y2="${H-B}" stroke="var(--violet)" stroke-width="1.4" stroke-dasharray="5 4" opacity=".85"/>
+          <text x="${X(0.07)+5}" y="${TP+11}" font-size="10" fill="var(--violet)">ожидание 7%</text>`;
+  svg += '</svg>';
+  document.getElementById('chart').innerHTML = svg;
+  document.getElementById('legend').innerHTML = series.map(s =>
+    `<span><i style="background:${s.color}"></i>${s.name}</span>`).join('');
+}
+
+/* ------------------------------------------------------------------ панель */
+const GFIELDS = [
+  {k:'exitYear', l:'Год выхода (продажи)', min:2027, max:2040, step:1, int:1},
+  {k:'oppMode',  l:'💰 Ставка вклада: режим', hl:1,
+                 sel:[['ladder','Лестница по годам'],['flat','Одна ставка на всё']]},
+  {k:'oppFlat',  l:'Вклад: ставка <i>нетто, %</i>', pct:1, step:0.5, hl:1, only:'flat'},
+  {k:'opp2627',  l:'Вклад 2026-27, %', pct:1, step:0.5, hl:1, only:'ladder'},
+  {k:'opp28',    l:'Вклад 2028, %',    pct:1, step:0.5, hl:1, only:'ladder'},
+  {k:'opp2932',  l:'Вклад 2029-32, %', pct:1, step:0.5, hl:1, only:'ladder'},
+  {k:'opp33',    l:'Вклад 2033+, %',   pct:1, step:0.5, hl:1, only:'ladder'},
+  {k:'mortRate', l:'Ставка ипотеки, %', pct:1, step:0.1},
+  {k:'loanCap',  l:'Лимит льготы, млн', mln:1, step:0.5},
+  {k:'downMin',  l:'Мин. взнос, %', pct:1, step:1},
+  {k:'term',     l:'Срок ипотеки, лет', int:1, step:1},
+  {k:'rentIdx',  l:'Индексация аренды, %/год', pct:1, step:0.5},
+  {k:'vacancy',  l:'Простой, % года', pct:1, step:1},
+  {k:'maint',    l:'Обслуживание, % аренды', pct:1, step:1},
+  {k:'turnover', l:'Смена жильцов, % аренды', pct:1, step:1},
+  {k:'rentTax',  l:'Налог с аренды, %', pct:1, step:1},
+  {k:'propTax',  l:'Налог на имущество, % цены', pct:1, step:0.05},
+  {k:'saleCost', l:'Риелтор при продаже, %', pct:1, step:0.5},
+  {k:'renoBack', l:'Ремонт вернётся в цене, %', pct:1, step:5},
+];
+function oppText(){
+  if (G.oppMode === 'flat') return `${fmtP(G.oppFlat)} каждый год`;
+  const yy = [];
+  for (let y = 2026; y <= G.exitYear; y++) yy.push(Math.round(oppRate(y, G)*1000)/10);
+  return yy.join(' → ') + '%';
+}
+function panel(){
+  const box = document.getElementById('globals');
+  box.innerHTML = GFIELDS.map(f => {
+    const off = f.only && f.only !== G.oppMode;
+    const k = `f${f.hl?' hl':''}${off?' dim':''}`;
+    if (f.sel) return `<div class="${k}"><label>${f.l}</label><select data-g="${f.k}">` +
+      f.sel.map(([v,t]) => `<option value="${v}" ${G[f.k]===v?'selected':''}>${t}</option>`).join('') + '</select></div>';
+    const v = f.pct ? (G[f.k]*100) : f.mln ? (G[f.k]/1e6) : G[f.k];
+    const ch = Math.abs((f.pct?GDEF[f.k]*100:f.mln?GDEF[f.k]/1e6:GDEF[f.k]) - v) > 1e-9 && !off ? ' ch' : '';
+    return `<div class="${k}"><label>${f.l}</label><input class="${ch}" type="number" data-g="${f.k}"
+      step="${f.step||1}" value="${Math.round(v*1000)/1000}"${off?' disabled title="работает в другом режиме"':''}></div>`;
+  }).join('');
+  document.getElementById('oppnote').innerHTML =
+    `💰 <b>Вклад-альтернатива в расчёте (${G.exitYear === 2026 ? '2026' : `2026…${G.exitYear}`}):</b> ${oppText()}. ` +
+    `Это то, с чем сравнивается каждая квартира в колонке «эффект против вклада». ` +
+    `Ставка ЦБ 14,25% на июль 2026, вклады нетто ~13-14%, дальше по прогнозу снижения.`;
+  box.querySelectorAll('[data-g]').forEach(el => {
+    el.onchange = () => {
+      const f = GFIELDS.find(x => x.k === el.dataset.g);
+      G[f.k] = f.sel ? el.value : (f.pct ? +el.value/100 : f.mln ? +el.value*1e6 : (f.int ? Math.round(+el.value) : +el.value));
+      save(); panel(); render();
+    };
+  });
+}
+
+/* ------------------------------------------------------------------ пресеты */
+document.querySelectorAll('[data-preset]').forEach(b => b.onclick = () => {
+  const p = b.dataset.preset;
+  if (p === 'opp8' || p === 'opp14'){
+    G.oppMode = 'flat'; G.oppFlat = p === 'opp8' ? 0.08 : 0.14;
+    save(); panel(); render(); return;
+  }
+  if (p === 'oppLad'){
+    G.oppMode = 'ladder';
+    ['opp2627','opp28','opp2932','opp33'].forEach(k => G[k] = GDEF[k]);
+    save(); panel(); render(); return;
+  }
+  for (const o of ALL){
+    const ov = ovOf(o.short);
+    if (p === 'g5') ov.appr = 0.05;
+    if (p === 'g7') ov.appr = 0.07;
+    if (p === 'asym') ov.appr = /Татум/.test(o.short) ? 0.12 : 0.07;
+    if (p === 'rentV'){ delete ov.rent; }
+    if (p === 'rentM') ov.rent = o.real_rent;
+    if (p === 'onlyV') ov.on = !!o.shortlist;
+    if (p === 'all') ov.on = true;
+  }
+  save(); render();
+});
+document.getElementById('bReset').onclick = () => {
+  if (!confirm('Сбросить все правки и вернуться к базовым допущениям модели?\n\nСвои добавленные объекты останутся — их удаляют по одному через «править».')) return;
+  G = Object.assign({}, GDEF); OV = {}; save(); panel(); render();
+};
+document.getElementById('bExport').onclick = () => {
+  const blob = new Blob([JSON.stringify(state(), null, 1)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'invest-dash-scenario.json'; a.click();
+};
+document.getElementById('bImport').onclick = () => {
+  const i = document.createElement('input'); i.type = 'file'; i.accept = '.json';
+  i.onchange = () => {
+    const fr = new FileReader();
+    fr.onload = () => { try{
+      apply(JSON.parse(fr.result)); save(); panel(); render();
+    }catch(e){ alert('Не смог прочитать файл'); } };
+    fr.readAsText(i.files[0]);
+  };
+  i.click();
+};
+
+/* ------------------------------------------------------------------ модалки */
+const ovl = document.getElementById('ovl'), mbox = document.getElementById('mbox');
+function closeModal(){ ovl.hidden = true; mbox.innerHTML = ''; }
+ovl.onclick = e => { if (e.target === ovl) closeModal(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !ovl.hidden) closeModal(); });
+function openModal(title, body, foot, wide){
+  mbox.className = 'mbox' + (wide ? ' wide' : '');
+  mbox.innerHTML = `<div class="mhead"><h3>${title}</h3><button class="x" title="закрыть (Esc)">×</button></div>
+    <div class="mbody">${body}</div><div class="mfoot">${foot}</div>`;
+  mbox.querySelector('.x').onclick = closeModal;
+  ovl.hidden = false;
+  ovl.scrollTop = 0;
+  return mbox;
+}
+
+/* поля формы: одинаково рисуются и читаются */
+function fieldHtml(f, val){
+  const hint = f.hint ? `<span class="hint">${f.hint}</span>` : '';
+  if (f.bool) return `<div class="f"><label>&nbsp;</label>
+    <label style="display:flex;gap:7px;align-items:center;font-size:12.5px;color:var(--tx);cursor:pointer">
+    <input type="checkbox" class="ck" data-k="${f.k}" ${val?'checked':''}> ${f.l}</label>${hint}</div>`;
+  if (f.opts) return `<div class="f ${f.w||''}"><label>${f.l}</label><select data-k="${f.k}">${
+    f.opts.map(([v,t]) => `<option value="${esc(v)}" ${String(val)===String(v)?'selected':''}>${esc(t)}</option>`).join('')
+    }</select>${hint}</div>`;
+  if (f.area) return `<div class="f wideall"><label>${f.l}</label><textarea data-k="${f.k}">${esc(val)}</textarea>${hint}</div>`;
+  if (f.text) return `<div class="f ${f.w||''}"><label>${f.l}</label>
+    <input type="text" data-k="${f.k}" value="${esc(val)}" placeholder="${esc(f.ph||'')}">${hint}</div>`;
+  const shown = val === null || val === undefined || isNaN(val) ? ''
+    : Math.round((f.pct ? val*100 : f.mln ? val/1e6 : f.th ? val/1000 : val)*1e6)/1e6;
+  return `<div class="f ${f.w||''}"><label>${f.l}</label><input type="number" data-k="${f.k}"
+    step="${f.step||1}" value="${shown}" placeholder="${esc(f.ph||'')}">${hint}</div>`;
+}
+function readField(f, el){
+  if (f.bool) return el.checked;
+  if (f.opts || f.text || f.area) return el.value.trim();
+  if (el.value === '') return null;
+  const v = +el.value;
+  if (isNaN(v)) return null;
+  return f.pct ? v/100 : f.mln ? v*1e6 : f.th ? v*1000 : (f.int ? Math.round(v) : v);
+}
+function readAll(root, defs){
+  const out = {};
+  for (const f of defs){
+    const el = root.querySelector(`[data-k="${f.k}"]`);
+    if (el) out[f.k] = readField(f, el);
+  }
+  return out;
+}
+
+/* ------------------------------------------------------- блок «схема оплаты» */
+const PF = {
+  custom: [
+    {k:'downPct', l:'Первоначальный взнос, %', pct:1, step:1},
+    {k:'rate',    l:'Ставка, %/год',           pct:1, step:0.1},
+    {k:'term',    l:'Срок, лет',               int:1, step:1},
+    {k:'cap',     l:'Лимит кредита, млн',      mln:1, step:0.5,
+                  hint:'0 = без лимита. Если лимит меньше кредита, разницу добираешь взносом'},
+  ],
+  two: [
+    {k:'downPct', l:'Первоначальный взнос, %', pct:1, step:1},
+    {k:'capAmt',  l:'Льготный транш, млн',     mln:1, step:0.5, hint:'сколько идёт по льготной ставке'},
+    {k:'rate1',   l:'Ставка льготного, %',     pct:1, step:0.1},
+    {k:'term1',   l:'Срок льготного, лет',     int:1, step:1},
+    {k:'rate2',   l:'Ставка рыночного, %',     pct:1, step:0.1},
+    {k:'term2',   l:'Срок рыночного, лет',     int:1, step:1},
+  ],
+  inst: [
+    {k:'downPct',    l:'Первый взнос, %',      pct:1, step:5},
+    {k:'months',     l:'Рассрочка, мес',       int:1, step:1, hint:'от сен 2026, обычно до ключей'},
+    {k:'everyN',     l:'Платёж раз в, мес',    int:1, step:1, hint:'1 = ежемесячно, 3 = поквартально'},
+    {k:'balloonPct', l:'Остаток к концу, %',   pct:1, step:5, hint:'крупный платёж в конце рассрочки'},
+    {k:'markup',     l:'Удорожание, %',        pct:1, step:0.5, hint:'на сколько застройщик поднимает цену за рассрочку'},
+    {k:'mort',       l:'Остаток в ипотеку',    bool:1},
+    {k:'mortRate',   l:'Ставка по остатку, %', pct:1, step:0.1, only:'mort'},
+    {k:'mortTerm',   l:'Срок по остатку, лет', int:1, step:1, only:'mort'},
+  ],
+};
+function payFieldsHtml(pay, G){
+  if (pay.mode === 'family') return `<div class="payinfo">Условия берутся из общих параметров сверху:
+    ставка <b>${fmtP(G.mortRate)}</b>, лимит льготы <b>${fmtM1(G.loanCap)} млн</b>,
+    минимальный взнос <b>${fmtP(G.downMin)}</b>, срок <b>${G.term} лет</b>.
+    Если цена выше лимита, взнос добирает разницу. Помни: такая ипотека одна на семью.</div>`;
+  if (pay.mode === 'cash') return `<div class="payinfo">Кредита нет: вся цена платится своими в сентябре 2026.
+    Полезно как база сравнения — видно, сколько на самом деле добавляет (или отнимает) ипотечное плечо.</div>`;
+  const defs = (PF[pay.mode] || []).filter(f => !f.only || pay[f.only]);
+  return `<div class="fg">${defs.map(f => fieldHtml(f, pay[f.k])).join('')}</div>`;
+}
+function payPreview(p, Gi){
+  const r = run(p, Gi), F = r.fin;
+  const rows = [];
+  rows.push(`своими в сентябре 2026 <b>${fmtM(F.down)} млн</b>`);
+  if (F.own.length){
+    const per = F.own[0].amt, same = F.own.every(q => Math.abs(q.amt - per) < 1);
+    rows.push(`потом ${F.own.length} ${F.own.length === 1 ? 'платёж' : 'платежей'} ` +
+      (same ? `по <b>${fmtK(per)} тр</b>` : `на <b>${fmtM(F.own.reduce((s,q)=>s+q.amt,0))} млн</b>`));
+  }
+  F.tranches.forEach(t => rows.push(`кредит <b>${fmtM(t.loan)} млн</b> под ${fmtP(t.rate)} на ${t.term} лет` +
+    (t.startIdx ? ` (с ${t.startIdx}-го месяца)` : '') + ` → ${fmtK(t.mp)} тр/мес`));
+  if (!F.tranches.length && !F.own.length && F.mode !== 'cash') rows.push('кредита нет');
+  if (F.paid > p.price + 1) rows.push(`итого за квартиру <b>${fmtM(F.paid)} млн</b> вместо ${fmtM(p.price)} млн`);
+  const late = F.own.some(q => addMonths(2026, 9, q.idx)[0] > Gi.exitYear);
+  return `<div class="payinfo${late?' warn':''}">${rows.join(' · ')}<br>
+    Своих денег в самой глубокой точке: <b>${fmtM(r.minCash)} млн</b> ·
+    эффект против вклада <b class="${cls(r.effect)}">${sgn(r.effect)} млн</b> · XIRR <b>${fmtP(r.xirr)}</b>
+    ${late ? '<br>⚠️ Рассрочка не закрывается до года выхода — недоплаченное вычитается из цены продажи.' : ''}</div>`;
+}
+
+function payModal(short){
+  const o = ALL.find(x => x.short === short);
+  if (!o) return;
+  const ov = ovOf(short), Gi = gFor(ov);
+  let pay = JSON.parse(JSON.stringify(ov.pay || o.pay || {mode:'family'}));
+  let focusK = null;
+
+  const draw = () => {
+    const body = `<div class="pills">${Object.entries(PAY_MODES).map(([m,l]) =>
+        `<button class="pill ${pay.mode===m?'on':''}" data-m="${m}">${esc(l)}</button>`).join('')}</div>
+      <div id="pf">${payFieldsHtml(pay, Gi)}</div>
+      <div id="pp"></div>`;
+    const foot = `<span class="sp">${esc(o.short)} · ${fmtM(num(ov.price, o.price))} млн</span>
+      <button class="btn" data-a="reset">Вернуть семейную</button>
+      <button class="btn pri" data-a="ok">Применить</button>`;
+    const m = openModal('Схема оплаты · ' + esc(o.short), body, foot);
+    const p = params(o, Object.assign({}, ov, {pay}));
+    m.querySelector('#pp').innerHTML = payPreview(p, Gi);
+    if (focusK){ const el = m.querySelector(`#pf [data-k="${focusK}"]`); if (el) el.focus(); }
+    m.querySelectorAll('[data-m]').forEach(b => b.onclick = () => {
+      pay = pay.mode === b.dataset.m ? pay : payDefaults(b.dataset.m, Gi);
+      focusK = null; draw();
+    });
+    m.querySelectorAll('#pf [data-k]').forEach(el => el.onchange = () => {
+      Object.assign(pay, readAll(m.querySelector('#pf'), PF[pay.mode] || []));
+      focusK = el.dataset.k; draw();
+    });
+    m.querySelector('[data-a="reset"]').onclick = () => { pay = {mode:'family'}; focusK = null; draw(); };
+    m.querySelector('[data-a="ok"]').onclick = () => {
+      if (pay.mode === 'family') delete ov.pay; else ov.pay = pay;
+      save(); closeModal(); render();
+    };
+  };
+  draw();
+}
+
+/* ------------------------------------------------------------- свой объект */
+const RENO_BY_FINISH = {'чистовая': 30_000, 'предчистовая': 75_000, 'без отделки': 95_000};
+const CF = [
+  {k:'short',    l:'Название объекта', text:1, w:'wide2', ph:'ЖК «Название»'},
+  {k:'url',      l:'Ссылка на лот',    text:1, w:'wide2', ph:'https://…'},
+  {k:'district', l:'Район / город',    text:1, w:'wide2', ph:'Москва, САО'},
+  {k:'rooms',    l:'Комнатность',      opts:[['студия','студия'],['1к','1к'],['евро-2','евро-2'],
+                                             ['2к','2к'],['3к','3к'],['иное','иное']]},
+  {k:'area',     l:'Площадь, м²',      step:0.1},
+  {k:'price',    l:'Цена, млн ₽',      mln:1, step:0.05},
+  {k:'finish',   l:'Отделка на сдаче', opts:[['без отделки','без отделки'],['предчистовая','предчистовая (white box)'],
+                                             ['чистовая','чистовая, только мебель']]},
+  {k:'reno_psm',    l:'Ремонт, тр/м²',   th:1, step:5, hint:'подставляется по отделке, можно поправить'},
+  {k:'reno_months', l:'Ремонт, мес',     int:1, step:1},
+  {k:'deliver_month', l:'Ключи через, мес', int:1, step:1, hint:'от сентября 2026; 0 = дом уже сдан'},
+  {k:'rent_mo',   l:'Аренда план, тр/мес', th:1, step:1},
+  {k:'real_rent', l:'Аренда осторожно, тр', th:1, step:1, hint:'рыночная оценка, если план завышен'},
+  {k:'opt_rent',  l:'Аренда оптимистично, тр', th:1, step:1},
+  {k:'appr',      l:'Рост цены, %/год',  pct:1, step:0.5},
+  {k:'note',      l:'Заметка для себя',  area:1},
+];
+function blankCase(){
+  return {short:'', url:'', district:'', rooms:'1к', area:null, price:null, finish:'без отделки',
+          reno_psm:95_000, reno_months:6, deliver_month:0, rent_mo:null, real_rent:null, opt_rent:null,
+          appr:0.05, note:'', pay:null};
+}
+function caseModal(editShort){
+  const src = editShort ? CUSTOM.find(x => x.short === editShort) : null;
+  let c = src ? JSON.parse(JSON.stringify(src)) : blankCase();
+  let pay = JSON.parse(JSON.stringify(c.pay || {mode:'family'}));
+  let err = '', focusK = null;   // форма перерисовывается целиком, поле под курсором возвращаем
+
+  const draft = () => Object.assign({}, c, {
+    shortlist: true, mine: true, gap: 0, finish_raw: c.finish, pay: pay.mode === 'family' ? null : pay,
+    area: c.area || 1, price: c.price || 0, rent_mo: c.rent_mo || 0,
+    real_rent: c.real_rent || c.rent_mo || 0, opt_rent: c.opt_rent || Math.round((c.rent_mo||0)*1.15),
+  });
+
+  const draw = () => {
+    const body = `
+      <div class="sec"><h4>Объект</h4><div class="fg two">${CF.map(f => fieldHtml(f, c[f.k])).join('')}</div></div>
+      <div class="sec"><h4>Схема оплаты</h4>
+        <div class="pills">${Object.entries(PAY_MODES).map(([m,l]) =>
+          `<button class="pill ${pay.mode===m?'on':''}" data-m="${m}">${esc(l)}</button>`).join('')}</div>
+        <div id="pf">${payFieldsHtml(pay, G)}</div></div>
+      <div class="sec"><h4>Что получается</h4><div id="pp"></div>${err?`<div class="err">${esc(err)}</div>`:''}</div>`;
+    const foot = `<span class="sp">хранится в этом браузере · «Поделиться» сделает ссылку с объектом внутри</span>
+      ${src ? '<button class="btn" data-a="del">Удалить</button>' : ''}
+      <button class="btn pri" data-a="ok">${src ? 'Сохранить' : 'Добавить объект'}</button>`;
+    const m = openModal(src ? 'Правка объекта · ' + esc(src.short) : 'Новый объект', body, foot, true);
+
+    const ok = c.area > 0 && c.price > 0;
+    m.querySelector('#pp').innerHTML = ok
+      ? payPreview(params(draft(), {}), G)
+      : '<div class="payinfo warn">Заполни площадь и цену — тогда посчитаю взнос, платёж и эффект против вклада.</div>';
+
+    if (focusK){
+      const el = m.querySelector(`.fg.two [data-k="${focusK}"]`);
+      if (el){ el.focus(); if (el.setSelectionRange && el.type === 'text') el.setSelectionRange(el.value.length, el.value.length); }
+    }
+    m.querySelectorAll('.fg.two [data-k]').forEach(el => el.onchange = () => {
+      const prevFin = c.finish;
+      Object.assign(c, readAll(m, CF));
+      if (c.finish !== prevFin) c.reno_psm = RENO_BY_FINISH[c.finish];   // смета следует за отделкой
+      if (c.finish === 'чистовая' && c.reno_months === 6) c.reno_months = 2;
+      err = ''; focusK = el.dataset.k; draw();
+    });
+    m.querySelectorAll('.pills [data-m]').forEach(b => b.onclick = () => {
+      pay = pay.mode === b.dataset.m ? pay : payDefaults(b.dataset.m, G);
+      focusK = null; draw();
+    });
+    m.querySelectorAll('#pf [data-k]').forEach(el => el.onchange = () => {
+      Object.assign(pay, readAll(m.querySelector('#pf'), PF[pay.mode] || []));
+      focusK = null; draw();
+      const back = mbox.querySelector(`#pf [data-k="${el.dataset.k}"]`);
+      if (back) back.focus();
+    });
+    if (src) m.querySelector('[data-a="del"]').onclick = () => {
+      if (!confirm(`Удалить объект «${src.short}» и все правки по нему? Отменить будет нельзя.`)) return;
+      CUSTOM = CUSTOM.filter(x => x.short !== src.short);
+      delete OV[src.short];
+      rebuild(); save(); closeModal(); render();
+    };
+    m.querySelector('[data-a="ok"]').onclick = () => {
+      const name = (c.short || '').trim();
+      if (!name) return (err = 'Без названия объект не добавить.', draw());
+      if (!(c.area > 0)) return (err = 'Площадь должна быть больше нуля.', draw());
+      if (!(c.price > 0)) return (err = 'Цена должна быть больше нуля.', draw());
+      if (ALL.some(x => x.short === name && (!src || x.short !== src.short)))
+        return (err = `Объект с названием «${name}» уже есть — возьми другое.`, draw());
+      const obj = Object.assign(draft(), {short: name, url: safeUrl(c.url)});
+      if (src && src.short !== name){ OV[name] = OV[src.short] || {}; delete OV[src.short]; }
+      const i = src ? CUSTOM.findIndex(x => x.short === src.short) : -1;
+      if (i >= 0) CUSTOM[i] = obj; else CUSTOM.push(obj);
+      rebuild(); save(); closeModal(); render();
+    };
+  };
+  draw();
+}
+document.getElementById('bAdd').onclick = () => caseModal(null);
+
+/* ------------------------------------------------------------------ ссылка */
+const b64u = b => btoa(String.fromCharCode(...b)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const ub64u = s => Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')), ch => ch.charCodeAt(0));
+async function packState(obj){
+  const bytes = new TextEncoder().encode(JSON.stringify(obj));
+  if (typeof CompressionStream === 'function'){
+    const st = new Blob([bytes]).stream().pipeThrough(new CompressionStream('deflate-raw'));
+    return 'z' + b64u(new Uint8Array(await new Response(st).arrayBuffer()));
+  }
+  return 'r' + b64u(bytes);
+}
+async function unpackState(s){
+  let bytes = ub64u(s.slice(1));
+  if (s[0] === 'z'){
+    const st = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+    bytes = new Uint8Array(await new Response(st).arrayBuffer());
+  }
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+async function shareModal(){
+  let onlyMine = false;
+  const draw = async () => {
+    const s = onlyMine ? {G, OV: {}, CUSTOM, COL_OFF: {}} : state();
+    const link = location.origin + location.pathname + '#s=' + await packState(s);
+    const nOv = Object.keys(s.OV).length, nC = CUSTOM.length;
+    const body = `<div class="pills">
+        <button class="pill ${onlyMine?'':'on'}" data-o="0">Весь мой расклад</button>
+        <button class="pill ${onlyMine?'on':''}" data-o="1">Только свои объекты</button>
+      </div>
+      <div class="f"><label>Ссылка — открывается у любого, ничего ставить не надо</label>
+        <textarea class="lnk" readonly>${esc(link)}</textarea></div>
+      <div class="payinfo">${onlyMine
+        ? `В ссылке <b>${plural(nC, 'твой объект', 'твоих объекта', 'твоих объектов')}</b> и общие параметры. Правки по объектам из модели не поедут.`
+        : `В ссылке всё: общие параметры, ${nOv ? `правки по <b>${plural(nOv, 'объекту', 'объектам', 'объектам')}</b>` : 'правок по объектам нет'} и <b>${plural(nC, 'свой объект', 'своих объекта', 'своих объектов')}</b>.`}
+        Длина ${link.length} символов${link.length > 7000 ? ' — многовато, часть мессенджеров может обрезать. Тогда шли «только свои объекты».' : '.'}
+        <br>Данные лежат прямо в ссылке, на сервер ничего не уходит. Кто её откроет — увидит твои цифры.</div>`;
+    const m = openModal('Поделиться расчётом', body, `<button class="btn pri" data-a="cp">Скопировать ссылку</button>`);
+    m.querySelectorAll('[data-o]').forEach(b => b.onclick = () => { onlyMine = b.dataset.o === '1'; draw(); });
+    m.querySelector('[data-a="cp"]').onclick = async () => {
+      const ta = m.querySelector('textarea');
+      try{ await navigator.clipboard.writeText(link); }catch(e){ ta.select(); document.execCommand('copy'); }
+      m.querySelector('[data-a="cp"]').textContent = 'Скопировано ✓';
+    };
+  };
+  await draw();
+}
+document.getElementById('bShare').onclick = () => shareModal();
+
+const banner = document.getElementById('banner');
+function showBanner(s){
+  const mine = (s.CUSTOM || []).length, tweaked = Object.keys(s.OV || {}).length;
+  document.getElementById('bannerTxt').innerHTML =
+    `Ты смотришь расчёт из ссылки: <b>${plural(mine, 'добавленный объект', 'добавленных объекта', 'добавленных объектов')}</b>, ` +
+    `${tweaked ? `правки по <b>${plural(tweaked, 'объекту', 'объектам', 'объектам')}</b>` : 'без правок по объектам'}. ` +
+    `Твой собственный расклад не тронут, пока не нажмёшь «сохранить себе».`;
+  banner.hidden = false;
+}
+function dropLink(){
+  banner.hidden = true;
+  lastHash = '';   // чтобы ту же ссылку можно было открыть заново
+  history.replaceState(null, '', location.pathname + location.search);
+}
+document.getElementById('bKeep').onclick = () => { fromLink = false; save(); dropLink(); };
+document.getElementById('bDrop').onclick = () => {
+  fromLink = false; G = Object.assign({}, GDEF); OV = {}; CUSTOM = []; COL_OFF = {};
+  load(); dropLink(); panel(); render();
+};
+
+/* ------------------------------------------------------------------ заметки */
+function notes(){
+  document.getElementById('notes').innerHTML = `
+<p><b>Главная колонка — «эффект против вклада».</b> Она отвечает на вопрос «а стоило ли вообще связываться с квартирой»: насколько твой капитал к декабрю ${G.exitYear} больше или меньше, чем если те же деньги просто лежали под процент. Число не зависит от размера бюджета, поэтому им можно честно сравнивать объекты с разной ценой. XIRR тоже полезен, но он игнорирует, сколько денег заморожено.</p>
+<p><b>Отделка на сдаче</b> стоит рядом с названием, потому что она задаёт две вещи сразу: смету ремонта и сколько месяцев объект стоит без аренды. <span class="fin f0">чистовая</span> это под ключ, нужна только меблировка (~30тр/м²) и аренда идёт почти сразу после ключей; <span class="fin f1">предчистовая</span> это white box, ~75тр/м² и полгода ремонта; <span class="fin f2">без отделки</span> это бетон, 85-95тр/м² и те же полгода, но дороже. Название объекта кликабельно, ведёт на лот у застройщика.</p>
+<p><b>«Порог роста б/у»</b> — единственная цифра, которую стоит запомнить по каждому объекту: при каком росте цены он сравнивается с вкладом. Сравни её со своим ожиданием роста (пунктир 7% на графике).</p>
+<div class="warnbox"><b>Что модель считать не умеет, а решение это меняет:</b>
+<ul>
+<li><b>Одна семейная ипотека на семью.</b> Выбор одноразовый — это не «портфель из нескольких квартир», а одна ставка. Плюс требование прописать родителей и ребёнка в купленном жилье стыкуется со сдачей плохо: уточняй формулировку у конкретного банка.</li>
+<li><b>Риск застройщика.</b> ПИК и ФСК против первого проекта молодой компании — в цифрах одинаково, в жизни нет. Считай «задержку, мес» как ползунок этого риска и посмотри, сколько эффекта съедает каждый квартал.</li>
+<li><b>Ликвидность формата.</b> Студия и трёшка при одном XIRR продаются по-разному: студий в одном ЖК сотни, трёшка ждёт покупателя дольше.</li>
+<li><b>Аренда индексируется на ${fmtP(G.rentIdx)}/год независимо от роста цены.</b> В мире, где цены растут на 12%, аренда тоже росла бы быстрее — арендные варианты при высоком росте слегка занижены.</li>
+<li><b>Ремонт возвращается в цене на ${fmtP(G.renoBack)}.</b> Это допущение в пользу «с ремонтом и в аренду» против чистого флипа. Поставь 70-80% и посмотри, что изменится.</li>
+</ul></div>
+<p><b>Флип</b> (галочка у названия) = не сдаём и не ремонтируем: только держим ДДУ и продаём. Так считается стратегия по Татуму. Обрати внимание на НДФЛ: продажа до окт 2031 отдаёт 13-15% с прибыли, после — ноль.</p>
+<details><summary>Что именно вычитается из аренды</summary>
+<p class="note">Валовая аренда минус простой ${fmtP(G.vacancy)} года, минус налог ${fmtP(G.rentTax)} (НПД), минус смена жильцов ${fmtP(G.turnover)} и обслуживание/страховка/ЖКХ ${fmtP(G.maint)} от валовой, минус налог на имущество ${fmtP(G.propTax)} от цены. При продаже: риелтор ${fmtP(G.saleCost)}, остаток кредита гасится из цены, НДФЛ по дате продажи. Ипотека платится с сен 2026 (деньги уходят на эскроу при регистрации ДДУ), а не с ключей.</p></details>`;
+}
+
+/* ------------------------------------------------------------------ старт */
+// Сценарий из ссылки применяем и при загрузке, и когда ссылку вставили в уже
+// открытую вкладку: смена только хвоста после # страницу не перезагружает.
+let lastHash = '';
+async function applyLink(){
+  const h = location.hash || '';
+  if (!h.startsWith('#s=') || h === lastHash) return false;
+  lastHash = h;
+  try{
+    const s = await unpackState(h.slice(3));
+    if (!s || typeof s !== 'object') return false;
+    apply(s); fromLink = true; showBanner(s);
+    return true;
+  }catch(e){ console.warn('ссылка со сценарием не читается:', e); return false; }
+}
+window.addEventListener('hashchange', async () => { if (await applyLink()){ panel(); render(); } });
+
+(async function start(){
+  load();
+  await applyLink();
+  panel(); render();
+})();
+</script>
+</body>
+</html>
