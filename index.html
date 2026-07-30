@@ -252,8 +252,8 @@ summary:hover{color:var(--acc)}
    <button class="btn" data-preset="opp8">Вклад 8% всегда</button>
    <button class="btn" data-preset="opp14">Вклад 14% всегда</button>
    <button class="btn" data-preset="oppLad">Вклад: лестница 14→12→10</button>
-   <button class="btn" data-preset="onlyV">Короткий список (12)</button>
-   <button class="btn" data-preset="all">Все 27 объектов</button>
+   <button class="btn" data-preset="onlyV" id="bOnlyV">Короткий список</button>
+   <button class="btn" data-preset="all" id="bAll">Все объекты</button>
   </div>
  </div>
 
@@ -478,6 +478,25 @@ const OBJECTS = [
   "rent_mo": 85000,
   "real_rent": 75000,
   "opt_rent": 98000,
+  "appr": 0.05,
+  "gap": 0
+ },
+ {
+  "short": "1-й Измайловский",
+  "district": "Москва, Гольяново (ВАО)",
+  "shortlist": true,
+  "rooms": "1к",
+  "finish": "без отделки",
+  "finish_raw": "без отделки (bare)",
+  "url": "https://www.dsk1.ru/1-izmajlovskij/flat/241966",
+  "price": 14592310,
+  "area": 32.7,
+  "reno_psm": 95000,
+  "reno_months": 6,
+  "deliver_month": 24,
+  "rent_mo": 65000,
+  "real_rent": 58000,
+  "opt_rent": 72000,
   "appr": 0.05,
   "gap": 0
  },
@@ -1936,6 +1955,12 @@ async function applyLink(){
   }catch(e){ console.warn('ссылка со сценарием не читается:', e); return false; }
 }
 window.addEventListener('hashchange', async () => { if (await applyLink()){ panel(); render(); } });
+
+// Счётчики на кнопках фильтра берём из данных, а не пишем руками: раньше «(12)» и
+// «27 объектов» были литералами в разметке и врали после каждого нового объекта.
+document.getElementById('bOnlyV').textContent =
+  `Короткий список (${OBJECTS.filter(o => o.shortlist).length})`;
+document.getElementById('bAll').textContent = `Все ${OBJECTS.length} объектов`;
 
 (async function start(){
   load();
