@@ -246,6 +246,7 @@ summary:hover{color:var(--acc)}
    <span>Быстрые сценарии:</span>
    <button class="btn" data-preset="g5">Рост 5% всем</button>
    <button class="btn" data-preset="g7">Рост 7% всем</button>
+   <button class="btn" data-preset="gloc" title="Замкадье и Новая Москва 3,5% · спальная Москва 5% · запад/вода/сильные кластеры 7%. Сводка доводов из 6 видео экспертов по рынку, авг 2026">Рост по локации (эксперты)</button>
    <button class="btn" data-preset="asym">Лидеры 7%, Татум 12%</button>
    <button class="btn" data-preset="rentV">Аренда: мой план</button>
    <button class="btn" data-preset="rentM">Аренда: осторожная рыночная</button>
@@ -308,6 +309,8 @@ const OBJECTS = [
   "real_rent": 62000,
   "opt_rent": 75000,
   "appr": 0.05,
+  "loc_tier": "обл",
+  "loc_appr": 0.035,
   "gap": 0
  },
  {
@@ -327,6 +330,8 @@ const OBJECTS = [
   "real_rent": 63000,
   "opt_rent": 86000,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  },
  {
@@ -346,6 +351,8 @@ const OBJECTS = [
   "real_rent": 70000,
   "opt_rent": 92000,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  },
  {
@@ -365,6 +372,8 @@ const OBJECTS = [
   "real_rent": 54000,
   "opt_rent": 75000,
   "appr": 0.05,
+  "loc_tier": "обл",
+  "loc_appr": 0.035,
   "gap": 0
  },
  {
@@ -384,6 +393,8 @@ const OBJECTS = [
   "real_rent": 58000,
   "opt_rent": 98000,
   "appr": 0.05,
+  "loc_tier": "топ",
+  "loc_appr": 0.07,
   "gap": 0
  },
  {
@@ -403,6 +414,8 @@ const OBJECTS = [
   "real_rent": 55000,
   "opt_rent": 109000,
   "appr": 0.05,
+  "loc_tier": "топ",
+  "loc_appr": 0.07,
   "gap": 0
  },
  {
@@ -422,6 +435,8 @@ const OBJECTS = [
   "real_rent": 45000,
   "opt_rent": 80000,
   "appr": 0.05,
+  "loc_tier": "обл",
+  "loc_appr": 0.035,
   "gap": 0
  },
  {
@@ -441,6 +456,8 @@ const OBJECTS = [
   "real_rent": 70000,
   "opt_rent": 104000,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 1
  },
  {
@@ -460,6 +477,8 @@ const OBJECTS = [
   "real_rent": 45000,
   "opt_rent": 58000,
   "appr": 0.05,
+  "loc_tier": "обл",
+  "loc_appr": 0.035,
   "gap": 0
  },
  {
@@ -479,6 +498,8 @@ const OBJECTS = [
   "real_rent": 75000,
   "opt_rent": 98000,
   "appr": 0.05,
+  "loc_tier": "топ",
+  "loc_appr": 0.07,
   "gap": 0
  },
  {
@@ -498,6 +519,8 @@ const OBJECTS = [
   "real_rent": 58000,
   "opt_rent": 72000,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  },
  {
@@ -517,6 +540,8 @@ const OBJECTS = [
   "real_rent": 58000,
   "opt_rent": 75000,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  },
  {
@@ -536,6 +561,8 @@ const OBJECTS = [
   "real_rent": 85000,
   "opt_rent": 109000,
   "appr": 0.05,
+  "loc_tier": "топ",
+  "loc_appr": 0.07,
   "gap": 1
  },
  {
@@ -555,6 +582,8 @@ const OBJECTS = [
   "real_rent": 82000,
   "opt_rent": 103500,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  },
  {
@@ -574,6 +603,8 @@ const OBJECTS = [
   "real_rent": 62000,
   "opt_rent": 78200,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  },
  {
@@ -593,6 +624,8 @@ const OBJECTS = [
   "real_rent": 60000,
   "opt_rent": 80500,
   "appr": 0.05,
+  "loc_tier": "топ",
+  "loc_appr": 0.07,
   "gap": 0
  },
  {
@@ -612,6 +645,8 @@ const OBJECTS = [
   "real_rent": 58000,
   "opt_rent": 74750,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  },
  {
@@ -631,6 +666,8 @@ const OBJECTS = [
   "real_rent": 62000,
   "opt_rent": 97750,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  },
  {
@@ -650,6 +687,8 @@ const OBJECTS = [
   "real_rent": 62000,
   "opt_rent": 88550,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  },
  {
@@ -669,6 +708,8 @@ const OBJECTS = [
   "real_rent": 73000,
   "opt_rent": 92000,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  },
  {
@@ -688,6 +729,8 @@ const OBJECTS = [
   "real_rent": 70000,
   "opt_rent": 97750,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  },
  {
@@ -707,6 +750,8 @@ const OBJECTS = [
   "real_rent": 70000,
   "opt_rent": 161000,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  },
  {
@@ -726,6 +771,8 @@ const OBJECTS = [
   "real_rent": 90000,
   "opt_rent": 126500,
   "appr": 0.05,
+  "loc_tier": "топ",
+  "loc_appr": 0.07,
   "gap": 0
  },
  {
@@ -745,6 +792,8 @@ const OBJECTS = [
   "real_rent": 82000,
   "opt_rent": 138000,
   "appr": 0.05,
+  "loc_tier": "топ",
+  "loc_appr": 0.07,
   "gap": 0
  },
  {
@@ -764,6 +813,8 @@ const OBJECTS = [
   "real_rent": 85000,
   "opt_rent": 138000,
   "appr": 0.05,
+  "loc_tier": "топ",
+  "loc_appr": 0.07,
   "gap": 0
  },
  {
@@ -783,6 +834,8 @@ const OBJECTS = [
   "real_rent": 80000,
   "opt_rent": 138000,
   "appr": 0.05,
+  "loc_tier": "топ",
+  "loc_appr": 0.07,
   "gap": 0
  },
  {
@@ -802,6 +855,8 @@ const OBJECTS = [
   "real_rent": 75000,
   "opt_rent": 98000,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  },
  {
@@ -821,6 +876,8 @@ const OBJECTS = [
   "real_rent": 78000,
   "opt_rent": 101000,
   "appr": 0.05,
+  "loc_tier": "топ",
+  "loc_appr": 0.07,
   "gap": 1
  },
  {
@@ -840,6 +897,8 @@ const OBJECTS = [
   "real_rent": 80000,
   "opt_rent": 101000,
   "appr": 0.05,
+  "loc_tier": "топ",
+  "loc_appr": 0.07,
   "gap": 0
  },
  {
@@ -859,6 +918,8 @@ const OBJECTS = [
   "real_rent": 62000,
   "opt_rent": 80000,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  },
  {
@@ -878,6 +939,8 @@ const OBJECTS = [
   "real_rent": 62000,
   "opt_rent": 80000,
   "appr": 0.05,
+  "loc_tier": "обл",
+  "loc_appr": 0.035,
   "gap": 2
  },
  {
@@ -897,6 +960,8 @@ const OBJECTS = [
   "real_rent": 80000,
   "opt_rent": 100000,
   "appr": 0.05,
+  "loc_tier": "топ",
+  "loc_appr": 0.07,
   "gap": 1
  },
  {
@@ -916,7 +981,30 @@ const OBJECTS = [
   "real_rent": 60000,
   "opt_rent": 75000,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
+ },
+ {
+  "short": "SkyGarden 297",
+  "district": "Покровское-Стрешнево, СЗАО (м.Тушинская ~15 мин)",
+  "shortlist": true,
+  "rooms": "1к",
+  "finish": "предчистовая",
+  "finish_raw": "предчистовая → ремонт и меблировка 75тр/м²",
+  "url": "https://fsk.ru/skygarden/flats/182941",
+  "price": 18559101,
+  "area": 36.3,
+  "reno_psm": 75000,
+  "reno_months": 6,
+  "deliver_month": 6,
+  "rent_mo": 70000,
+  "real_rent": 65000,
+  "opt_rent": 80000,
+  "appr": 0.05,
+  "loc_tier": "топ",
+  "loc_appr": 0.07,
+  "gap": 1
  },
  {
   "short": "Сиреневый 1к 38.9",
@@ -935,6 +1023,8 @@ const OBJECTS = [
   "real_rent": 70000,
   "opt_rent": 89700,
   "appr": 0.05,
+  "loc_tier": "мск",
+  "loc_appr": 0.05,
   "gap": 0
  }
 ];
@@ -1693,6 +1783,9 @@ document.querySelectorAll('[data-preset]').forEach(b => b.onclick = () => {
     const ov = ovOf(o.short);
     if (p === 'g5') ov.appr = 0.05;
     if (p === 'g7') ov.appr = 0.07;
+    // корзина роста по локации (см. LOC_TIER в build_dashboard.py); у объектов,
+    // добавленных руками в браузере, корзины нет — оставляем их собственный рост
+    if (p === 'gloc') ov.appr = o.loc_appr != null ? o.loc_appr : o.appr;
     if (p === 'asym') ov.appr = /Татум/.test(o.short) ? 0.12 : 0.07;
     if (p === 'rentV'){ delete ov.rent; }
     if (p === 'rentM') ov.rent = o.real_rent;
@@ -2040,6 +2133,7 @@ function notes(){
 <p><b>Главная колонка — «эффект против вклада».</b> Она отвечает на вопрос «а стоило ли вообще связываться с квартирой»: насколько твой капитал к декабрю ${G.exitYear} больше или меньше, чем если те же деньги просто лежали под процент. Число не зависит от размера бюджета, поэтому им можно честно сравнивать объекты с разной ценой. XIRR тоже полезен, но он игнорирует, сколько денег заморожено.</p>
 <p><b>Отделка на сдаче</b> стоит рядом с названием, потому что она задаёт две вещи сразу: смету ремонта и сколько месяцев объект стоит без аренды. <span class="fin f0">чистовая</span> это под ключ, нужна только меблировка (~30тр/м²) и аренда идёт почти сразу после ключей; <span class="fin f1">предчистовая</span> это white box, ~75тр/м² и полгода ремонта; <span class="fin f2">без отделки</span> это бетон, 85-95тр/м² и те же полгода, но дороже. Название объекта кликабельно, ведёт на лот у застройщика.</p>
 <p><b>«Порог роста б/у»</b> — единственная цифра, которую стоит запомнить по каждому объекту: при каком росте цены он сравнивается с вкладом. Сравни её со своим ожиданием роста (пунктир 7% на графике).</p>
+<p><b>Пресет «Рост по локации (эксперты)»</b> — сводка доводов из 6 видео экспертов по рынку (авг 2026). Базовый рейтинг считает рост одинаковым для всех, а эксперты хором говорят, что он расслоится по локациям: замкадью и Новой Москве кнопка ставит 3,5% (консенсус «для инвестиций там роста нет»), спальной Москве 5%, западу/северо-западу/воде и подтверждённым кластерам 7% (Покровское-Стрешнево, Водный стадион, Очаково-Аминьевка, Большой Сити, Обручевский). Спорные решения: Ситидзен оставлен в сильных (вода перевешивает скепсис «Тушино без точки притяжения»), Северный порт в спальных (вода есть, но окраина и цена застройщика). Это сценарий, а не факт: самый скептичный из шести экспертов считает, что рост везде будет 4-5%.</p>
 <div class="warnbox"><b>Что модель считать не умеет, а решение это меняет:</b>
 <ul>
 <li><b>Одна семейная ипотека на семью.</b> Выбор одноразовый — это не «портфель из нескольких квартир», а одна ставка. Плюс требование прописать родителей и ребёнка в купленном жилье стыкуется со сдачей плохо: уточняй формулировку у конкретного банка.</li>
